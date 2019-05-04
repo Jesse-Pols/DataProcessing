@@ -36,9 +36,6 @@ public class Reiziger implements Serializable{
 	public String getGBdatum() { return this.gbDatum; }
 	public void setGBdatum(String gbdatum) { this.gbDatum = gbdatum; }
 	
-	///////////////////////////
-	// NOT TESTED!!!!!!!!!! //
-	/////////////////////////
 	public ArrayList<OvChipkaart> getOvChipkaartList() { return this.allOvChipkaarten; }
 	public void addOvChipkaart(OvChipkaart newOvChipkaart) {
 		

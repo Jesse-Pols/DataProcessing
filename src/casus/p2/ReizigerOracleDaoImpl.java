@@ -67,57 +67,69 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		
 	}	
 	
-	ArrayList<Reiziger> reizigers = new ArrayList<Reiziger>();
-	
-	// Get all reizigers with this gbdatum
-	public List<Reiziger> findByGBdatum(String gbdatum){
+	public List<Reiziger> findByGBdatum(String gbDatum){
 		
-		ArrayList<Reiziger> reizigersGBdatum = new ArrayList<Reiziger>();
+		ArrayList<Reiziger> listReizigers = new ArrayList<Reiziger>();
 		
-		for (Reiziger single_reiziger : reizigers) {
+		String query = String.format("SELECT * FROM REIZIGER WHERE GEBORTEDATUM='%s'", gbDatum);
+		ResultSet rs = runQuery(query, true);
+		
+		try {
 			
-			if (single_reiziger.getGBdatum().equals(Date.valueOf(gbdatum))) {
-				reizigersGBdatum.add(single_reiziger);
+			while (rs.next()) {
+				
+				listReizigers.add(new Reiziger(
+						rs.getInt("REIZIGERID"),
+						rs.getString("VOORLETTERS"),
+						rs.getString("TUSSENVOEGSEL"),
+						rs.getString("ACHTERNAAM"),
+						rs.getString("GEBORTEDATUM")						
+						));	
+				
 			}
 			
-		}
+		} catch (Exception e) { System.out.println(e.getMessage()); }
 		
-		return reizigersGBdatum;
+		this.closeStatement();
+		
+		return listReizigers;		
+		
+	}
+	
+	public boolean save(Reiziger reiziger) {
+		
+		String query = String.format("INSERT INTO REIZIGER VALUES('%s', '%s', '%s', '%s', '%s')",
+				reiziger.getReizigerID(),
+				reiziger.getVoorLetters(),
+				reiziger.getTussenVoegsel(),
+				reiziger.getAchterNaam(),
+				reiziger.getGBdatum());
+		runQuery(query, false);
+		return true;
+		
+	}
+	
+	public boolean update(Reiziger reiziger) {		
+		
+		String query = "UPDATE REIZIGER SET ";
+		query += "VOORLETTERS='" + reiziger.getVoorLetters();
+		query += "', TUSSENVOEGSEL='" + reiziger.getTussenVoegsel();
+		query += "', ACHTERNAAM='" + reiziger.getAchterNaam();
+		query += "', GEBORTEDATUM='" + reiziger.getGBdatum();
+		query += "' WHERE REIZIGERID=" + reiziger.getReizigerID();
 
-	}
-	
-	// Saves new reiziger to list
-	public Reiziger save(Reiziger reiziger) {
-		
-		reizigers.add(reiziger);
-		return reiziger;
+		runQuery(query, false);		
+		return true;
 		
 	}
 	
-	// Updates oldReiziger to newReiziger
-	public Reiziger update(Reiziger reiziger) {
-		
-		int index = reizigers.indexOf(reiziger);
-		
-		reizigers.set(index, reiziger);
-		
-		return reiziger;
-		
-	}
-	
-	// Deletes reiziger from reizigers
 	public boolean delete(Reiziger reiziger) {
 		
-		for (int i = 0; i < reizigers.size(); i++) {
-			
-			if (reizigers.get(i).equals(reiziger)) {
-				reizigers.remove(i);
-			}
-			
-		}
-
-		return false;
+		String query = String.format("DELETE FROM REIZIGER WHERE REIZIGERID='%s'", 
+				reiziger.getReizigerID());			
+		runQuery(query, false);
+		return true;
 		
-	}
+	}	
 	
 }

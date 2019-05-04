@@ -8,8 +8,8 @@ public interface ReizigerDao {
 	public List<Reiziger> findAll();
 	public List<Reiziger> findByGBdatum(String gbdatum);
 	
-	public Reiziger save(Reiziger reiziger);
-	public Reiziger update(Reiziger reiziger);
+	public boolean save(Reiziger reiziger);
+	public boolean update(Reiziger reiziger);
 	public boolean delete(Reiziger reiziger);
 	
 }
