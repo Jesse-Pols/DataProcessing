@@ -1,13 +1,10 @@
 package casus.p3;
 
-import java.util.List;
-
-import casus.pojo.OvChipkaart;
 import casus.pojo.Reiziger;
 
 public interface ReizigerDao {
 	
-	public List<OvChipkaart> getOvChipkaartByReiziger(int reizigerId);
+	public Reiziger getReizigerByReizigerId(int reizigerId, OvChipkaartOracleDaoImpl ocodi);
 	
 	public boolean save(Reiziger reiziger);
 	public boolean update (Reiziger reiziger);

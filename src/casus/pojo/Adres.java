@@ -1,6 +1,23 @@
 package casus.pojo;
 
 public class Adres {
+
+	private int adresId;
+	private String postcode;
+	private String huisnummer;
+	private String straat;
+	private String woonplaats;
+	private int reizigerId;
+	
+	private Reiziger reiziger;
+	
+	public Adres (int adresId, String postcode, String huisnummer, String straat, String woonplaats) {
+		this.adresId = adresId;
+		this.postcode = postcode;
+		this.huisnummer = huisnummer;
+		this.straat = straat;
+		this.woonplaats = woonplaats;
+	}
 	
 	public int getReizigerId() {
 		return reizigerId;
@@ -10,19 +27,12 @@ public class Adres {
 		this.reizigerId = reizigerId;
 	}
 
-	private int adresId;
-	private String postcode;
-	private String huisnummer;
-	private String straat;
-	private String woonplaats;
-	private int reizigerId;
-	
-	public Adres (int adresId, String postcode, String huisnummer, String straat, String woonplaats) {
-		this.adresId = adresId;
-		this.postcode = postcode;
-		this.huisnummer = huisnummer;
-		this.straat = straat;
-		this.woonplaats = woonplaats;
+	public Reiziger getReiziger() {
+		return reiziger;
+	}
+
+	public void setReiziger(Reiziger reiziger) {
+		this.reiziger = reiziger;
 	}
 
 	public int getAdresId() {

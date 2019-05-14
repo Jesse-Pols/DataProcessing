@@ -1,16 +1,13 @@
 package casus.p3;
 
+import java.util.List;
+
 import casus.pojo.OvChipkaart;
 
 public interface OvChipkaartDao {
 	
-	public OvChipkaart getOvChipkaartById (int kaartNummer) {
-		
-		OvChipkaart ovChipkaart = null;
-		
-		String query = String.format("SELECT * FROM OV_CHIPKAART WHERE KAARTNUMMER", args)
-		
-	}
+	public OvChipkaart getOvChipkaartByKaartNr (int kaartNummer, ReizigerOracleDaoImpl rodi);
+	public List<OvChipkaart> getOvChipkaartByReizigerId (int reizigerId);
 	
 	public boolean save (OvChipkaart ovChipkaart);
 	public boolean update (OvChipkaart ovChipkaart);

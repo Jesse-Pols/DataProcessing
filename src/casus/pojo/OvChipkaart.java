@@ -1,6 +1,6 @@
 package casus.pojo;
 
-import java.sql.Date;
+import java.util.List;
 
 public class OvChipkaart {
 	
@@ -11,6 +11,7 @@ public class OvChipkaart {
 	private int reizigerId;
 	
 	private Reiziger reiziger;
+	private List<OvChipkaartProduct> ovChipkaartProducten;
 	
 	public OvChipkaart (int kaartNummer, String geldigTot, int klasse, float saldo, int reizigerId) {
 		this.kaartNummer = kaartNummer;
@@ -66,6 +67,14 @@ public class OvChipkaart {
 	
 	public void setReiziger(Reiziger reiziger) {
 		this.reiziger = reiziger;
+	}
+	
+	public List<OvChipkaartProduct> getOvChipkaartProducten() {
+		return ovChipkaartProducten;
+	}
+	
+	public void setOvChipkaartProducten(List<OvChipkaartProduct> ovChipkaartProducten) {
+		this.ovChipkaartProducten = ovChipkaartProducten;
 	}
 
 }

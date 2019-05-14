@@ -1,7 +1,5 @@
 package casus.pojo;
 
-import java.sql.Date;
-
 public class OvChipkaartProduct {
 	
 	private int ovproductID;
@@ -10,10 +8,28 @@ public class OvChipkaartProduct {
 	private String reisproductStatus;
 	private String lastUpdate;
 	
-	public OvChipkaartProduct (int ovproductID, String reisproductStatus, String lastUpdate) {
-		this.ovproductID = ovproductID;
-		this.reisproductStatus = reisproductStatus;
-		this.lastUpdate = lastUpdate;
+	private OvChipkaart ovChipkaart;
+	private Product product;
+	
+	public OvChipkaartProduct (int kaartNummer, int productNummer) {
+		this.kaartNummer = kaartNummer;
+		this.productNummer = productNummer;
+	}
+
+	public OvChipkaart getOvChipkaart() {
+		return ovChipkaart;
+	}
+
+	public void setOvChipkaart(OvChipkaart ovChipkaart) {
+		this.ovChipkaart = ovChipkaart;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public int getOvproductID() {

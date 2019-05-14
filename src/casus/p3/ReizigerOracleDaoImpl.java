@@ -1,7 +1,6 @@
 package casus.p3;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import casus.oracle.OracleGlobal;
@@ -10,7 +9,7 @@ import casus.pojo.Reiziger;
 
 public class ReizigerOracleDaoImpl extends OracleGlobal implements ReizigerDao {
 	
-	public Reiziger getReizigerById(int reizigerId) {
+	public Reiziger getReizigerByReizigerId(int reizigerId, OvChipkaartOracleDaoImpl ocodi) {
 		
 		Reiziger reiziger = null;
 		
@@ -35,39 +34,10 @@ public class ReizigerOracleDaoImpl extends OracleGlobal implements ReizigerDao {
 		
 		closeStatement();
 		
-		List<OvChipkaart> ovChipkaarten = this.getOvChipkaartByReiziger(reizigerId);
+		List<OvChipkaart> ovChipkaarten = ocodi.getOvChipkaartByReizigerId(reizigerId);
 		reiziger.setOvChipkaarten(ovChipkaarten);
 		
 		return reiziger;
-		
-	}
-	
-	public List<OvChipkaart> getOvChipkaartByReiziger(int reizigerId) {
-		
-		ArrayList<OvChipkaart> listOvChipkaart = new ArrayList<OvChipkaart>();
-		
-		String query = String.format("SELECT * FROM OV_CHIPKAART WHERE REIZIGERID=%d", reizigerId);
-		ResultSet rs = runQuery(query, true);
-		
-		try {
-			
-			while (rs.next()) {
-				
-				listOvChipkaart.add(new OvChipkaart(
-						rs.getInt("KAARTNUMMER"),
-						rs.getString("GELDIGTOT"),
-						rs.getInt("KLASSE"),
-						rs.getFloat("SALDO"),
-						rs.getInt("REIZIGERID")						
-						));
-				
-			}
-			
-		} catch (Exception e) { System.out.println(e.getMessage()); }
-		
-		closeStatement();
-		
-		return listOvChipkaart;
 		
 	}
 	

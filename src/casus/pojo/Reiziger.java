@@ -11,13 +11,22 @@ public class Reiziger {
 	private String geboortedatum;
 	
 	private List<OvChipkaart> ovChipkaarten;
-	
+	private List<Adres> addresses;
+
 	public Reiziger (int reizigerId, String voorletters, String tussenvoegsel, String achternaam, String geboortedatum) {
 		this.reizigerId = reizigerId;
 		this.voorletters = voorletters;
 		this.tussenvoegsel = tussenvoegsel;
 		this.achternaam = achternaam;
 		this.geboortedatum = geboortedatum;
+	}
+	
+	public List<Adres> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Adres> addresses) {
+		this.addresses = addresses;
 	}
 
 	public int getReizigerId() {

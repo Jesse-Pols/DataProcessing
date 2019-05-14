@@ -1,11 +1,15 @@
 package casus.pojo;
 
+import java.util.List;
+
 public class Product {
 	
 	private int productNummer;
 	private String productNaam;
 	private String beschrijving;
 	private float prijs;
+	
+	private List<OvChipkaartProduct> ovChipkaartProducten;
 	
 	public Product(int productNummer, String productNaam, String beschrijving, float prijs) {
 		this.productNummer = productNummer;
@@ -45,5 +49,15 @@ public class Product {
 	public void setPrijs(float prijs) {
 		this.prijs = prijs;
 	}
+
+	public List<OvChipkaartProduct> getOvChipkaartProducten() {
+		return ovChipkaartProducten;
+	}
+
+	public void setOvChipkaartProducten(List<OvChipkaartProduct> ovChipkaartProducten) {
+		this.ovChipkaartProducten = ovChipkaartProducten;
+	}
+	
+	
 
 }
