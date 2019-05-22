@@ -41,7 +41,10 @@ public class ReizigerOracleDaoImpl implements ReizigerDao  {
 		
 		int index = reizigers.indexOf(reiziger);
 		
-		reizigers.set(index, reiziger);
+		//reizigers.set(index, reiziger);
+		
+		reizigers.get(index).setGBdatum(reiziger.getGBdatum());
+		reizigers.get(index).setNaam(reiziger.getNaam());
 		
 		return reiziger;
 		

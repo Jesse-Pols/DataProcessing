@@ -1,9 +1,8 @@
 package casus.p1;
 
-import java.io.Serializable;
 import java.sql.Date;
 
-public class Reiziger implements Serializable{
+public class Reiziger {
 	
 	private String naam;
 	private Date gbdatum;
