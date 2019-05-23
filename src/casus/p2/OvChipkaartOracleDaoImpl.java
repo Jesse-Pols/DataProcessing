@@ -1,5 +1,6 @@
 package casus.p2;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -146,35 +147,57 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	
 	public boolean save(OvChipkaart ovChipkaart) {
 		
-		String query = String.format("INSERT INTO OV_CHIPKAART VALUES(%d, '%s', %d, %f, %d)",
-				ovChipkaart.getKaartNummer(),
-				ovChipkaart.getGeldigTot(),
-				ovChipkaart.getKlasse(),
-				ovChipkaart.getSaldo(),
-				ovChipkaart.getReizigerId());
-		runQuery(query, false);
+		try {
+			
+			PreparedStatement queryOvChipkaart = dbConnection.prepareStatement(
+					"INSERT INTO OV_CHIPKAART VALUES(?,?,?,?,?)");
+			queryOvChipkaart.setInt(1, ovChipkaart.getKaartNummer());
+			queryOvChipkaart.setString(2, ovChipkaart.getGeldigTot());
+			queryOvChipkaart.setInt(3, ovChipkaart.getKlasse());
+			queryOvChipkaart.setFloat(4, ovChipkaart.getSaldo());
+			queryOvChipkaart.setInt(5, ovChipkaart.getReizigerId());
+			queryOvChipkaart.executeUpdate();
+			queryOvChipkaart.close();
+			
+		} catch (Exception e) { System.out.println(e.getMessage()); return false; }
+		
 		return true;
 		
 	}
 	
 	public boolean update(OvChipkaart ovChipkaart) {		
 		
-		String query = "UPDATE OV_CHIPKAART SET ";
-		query += "GELDIGTOT='" + ovChipkaart.getGeldigTot();
-		query += "', KLASSE=" + ovChipkaart.getKlasse();
-		query += ", SALDO=" + ovChipkaart.getSaldo();
-		query += ", REIZIGERID=" + ovChipkaart.getReizigerId();
-		query += " WHERE KAARTNUMMER=" + ovChipkaart.getKaartNummer();
-		runQuery(query, false);		
+		try {
+			
+			PreparedStatement queryOvChipkaart = dbConnection.prepareStatement(
+					"UPDATE OV_CHIPKAART SET GELDIGTOT=?, KLASSE=?, SALDO=?, REIZIGERID=? WHERE KAARTNUMMER=?");
+			queryOvChipkaart.setString(1, ovChipkaart.getGeldigTot());
+			queryOvChipkaart.setInt(2, ovChipkaart.getKlasse());
+			queryOvChipkaart.setFloat(3, ovChipkaart.getSaldo());
+			queryOvChipkaart.setInt(4, ovChipkaart.getReizigerId());
+			queryOvChipkaart.setInt(5, ovChipkaart.getKaartNummer());
+			queryOvChipkaart.executeUpdate();	
+			queryOvChipkaart.close();
+			
+		} catch (Exception e) { System.out.println(e.getMessage()); return false; }
+		
 		return true;
 		
 	}
 	
 	public boolean delete(OvChipkaart ovChipkaart) {
 		
-		String query = String.format("DELETE FROM OV_CHIPKAART WHERE KAARTNUMMER=%d", 
-				ovChipkaart.getKaartNummer());			
-		runQuery(query, false);
+		
+		try {
+			
+			PreparedStatement queryOvChipkaart = dbConnection.prepareStatement(
+					"DELETE FROM OV_CHIPKAART WHERE KAARTNUMMER=?");
+			queryOvChipkaart.setInt(1, ovChipkaart.getKaartNummer());;
+			queryOvChipkaart.executeUpdate();	
+			queryOvChipkaart.close();
+			
+		} catch (Exception e) { System.out.println(e.getMessage()); return false; }
+		
 		return true;
 		
 	}	

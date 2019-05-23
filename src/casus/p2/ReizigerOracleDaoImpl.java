@@ -1,5 +1,6 @@
 package casus.p2;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -61,7 +62,30 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		
 		this.closeStatement();
 		
-		query = String.format("SELECT * FROM OV_CHIPKAART WHERE REIZIGERID=%d", args);
+		for (Reiziger reiziger : listReizigers) {
+			
+			ArrayList<OvChipkaart> listOvChipkaarten = new ArrayList<OvChipkaart>();
+			
+			query = String.format("SELECT * FROM OV_CHIPKAART WHERE REIZIGERID=%d", reiziger.getReizigerID());
+			rs = runQuery(query, true);
+			
+			try {
+				
+				while (rs.next()) {
+					
+					listOvChipkaarten.add(new OvChipkaart(
+							rs.getInt("KAARTNUMMER"),
+							rs.getString("GELDIGTOT"),
+							rs.getInt("KLASSE"),
+							rs.getFloat("SALDO"),
+							rs.getInt("REIZIGERID")
+							));
+					
+				}
+				
+			} catch (Exception e) { System.out.println(e.getMessage()); }
+			
+		}
 		
 		return listReizigers;		
 		
@@ -104,12 +128,16 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 				while (rs.next()) {
 					
 					listOvChipkaarten.add(new OvChipkaart(
-							
+							rs.getInt("KAARTNUMMER"),
+							rs.getString("GELDIGTOT"),
+							rs.getInt("KLASSE"),
+							rs.getFloat("SALDO"),
+							rs.getInt("REIZIGERID")
 							));
 					
 				}
 				
-			}
+			} catch (Exception e) { System.out.println(e.getMessage()); }
 			
 		}
 		
@@ -117,56 +145,59 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		
 	}
 	
-	public List<OvChipkaart> findAllOvchipkaarten(int reizigerId) {
-		
-		ArrayList<OvChipkaart> ovChipkaartList = new ArrayList<OvChipkaart>();
-		String query = String.format("SELECT * FROM OV_CHIPKAART WHERE REIZIGERID=%d", reizigerId);
-		ResultSet rs = runQuery(query, true);
+	public boolean save(Reiziger reiziger) {
 		
 		try {
 			
-			while (rs.next()) {
-				
-				ovChipkaartList.add();
-				
-			}
+			PreparedStatement queryReiziger = dbConnection.prepareStatement(
+					"INSERT INTO REIZIGER VALUES(?,?,?,?,?)");
+			queryReiziger.setInt(1, reiziger.getReizigerID());
+			queryReiziger.setString(2, reiziger.getVoorLetters());
+			queryReiziger.setString(3, reiziger.getTussenVoegsel());
+			queryReiziger.setString(4, reiziger.getAchterNaam());
+			queryReiziger.setString(5, reiziger.getGBdatum());
+			queryReiziger.executeUpdate();
+			queryReiziger.close();
 			
-		}
+		} catch (Exception e) { System.out.println(e.getMessage()); return false; }
 		
-	}
-	
-	public boolean save(Reiziger reiziger) {
-		
-		String query = String.format("INSERT INTO REIZIGER VALUES('%s', '%s', '%s', '%s', '%s')",
-				reiziger.getReizigerID(),
-				reiziger.getVoorLetters(),
-				reiziger.getTussenVoegsel(),
-				reiziger.getAchterNaam(),
-				reiziger.getGBdatum());
-		runQuery(query, false);
 		return true;
 		
 	}
 	
 	public boolean update(Reiziger reiziger) {		
 		
-		String query = "UPDATE REIZIGER SET ";
-		query += "VOORLETTERS='" + reiziger.getVoorLetters();
-		query += "', TUSSENVOEGSEL='" + reiziger.getTussenVoegsel();
-		query += "', ACHTERNAAM='" + reiziger.getAchterNaam();
-		query += "', GEBORTEDATUM='" + reiziger.getGBdatum();
-		query += "' WHERE REIZIGERID=" + reiziger.getReizigerID();
-
-		runQuery(query, false);		
-		return true;
+		try {
+			
+			PreparedStatement queryReiziger = dbConnection.prepareStatement(
+					"UPDATE REIZIGER SET VOORLETTERS=?, TUSSENVOEGSEL=?, ACHTERNAAM=?, GEBORTEDATUM=? WHERE REIZIGERID=?");
+			queryReiziger.setString(1, reiziger.getVoorLetters());
+			queryReiziger.setString(2, reiziger.getTussenVoegsel());
+			queryReiziger.setString(3, reiziger.getAchterNaam());
+			queryReiziger.setString(4, reiziger.getGBdatum());
+			queryReiziger.setInt(5, reiziger.getReizigerID());
+			queryReiziger.executeUpdate();
+			queryReiziger.close();
+			
+		} catch (Exception e) { System.out.println(e.getMessage()); return false; }
 		
+		return true;
+
 	}
 	
 	public boolean delete(Reiziger reiziger) {
 		
-		String query = String.format("DELETE FROM REIZIGER WHERE REIZIGERID='%s'", 
-				reiziger.getReizigerID());			
-		runQuery(query, false);
+		
+		try {
+			
+			PreparedStatement queryReiziger = dbConnection.prepareStatement(
+					"DELETE * FROM REIZIGER WHERE REIZIGERID=?");
+			queryReiziger.setInt(1, reiziger.getReizigerID());;
+			queryReiziger.executeUpdate();	
+			queryReiziger.close();
+			
+		} catch (Exception e) { System.out.println(e.getMessage()); return false; }
+		
 		return true;
 		
 	}	
