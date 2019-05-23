@@ -4,18 +4,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class Main {
+	@SuppressWarnings("unused")
 	public static void main(String[] args) throws SQLException {
 		
 		ReizigerOracleDaoImpl rodi = new ReizigerOracleDaoImpl();
 		OvChipkaartOracleDaoImpl ocodi = new OvChipkaartOracleDaoImpl();
 
-		Reiziger reiziger_1 = new Reiziger(6, "J", "", "Kanis", "22-OCT-99");
-		Reiziger reiziger_2 = new Reiziger(7, "G", "", "Pols", "12-SEP-91");
-		Reiziger reiziger_3 = new Reiziger(8, "Maarten", "", "Pols", "10-MAY-89");
-		
+		Reiziger reiziger_1 = new Reiziger(6, "J", "", "Kanis", "22-OCT-99");		
 		OvChipkaart ovChipkaart_1 = new OvChipkaart(42002, "12-MAY-99", 2, 3, 6);
-		OvChipkaart ovChipkaart_2 = new OvChipkaart(12347, "22-OCT-99", 3, 5, 7);
-		OvChipkaart ovChipkaart_3 = new OvChipkaart(67892, "05-FEB-00", 4, 6, 8);		
 		
 		// Save
 		rodi.save(reiziger_1);

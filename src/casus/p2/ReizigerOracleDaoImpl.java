@@ -1,7 +1,5 @@
 package casus.p2;
 
-import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -63,6 +61,8 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		
 		this.closeStatement();
 		
+		query = String.format("SELECT * FROM OV_CHIPKAART WHERE REIZIGERID=%d", args);
+		
 		return listReizigers;		
 		
 	}	
@@ -92,7 +92,46 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		
 		this.closeStatement();
 		
+		for (Reiziger reiziger : listReizigers) {
+			
+			ArrayList<OvChipkaart> listOvChipkaarten = new ArrayList<OvChipkaart>();
+			
+			query = String.format("SELECT * FROM OV_CHIPKAART WHERE REIZIGERID=%d", reiziger.getReizigerID());
+			rs = runQuery(query, true);
+			
+			try {
+				
+				while (rs.next()) {
+					
+					listOvChipkaarten.add(new OvChipkaart(
+							
+							));
+					
+				}
+				
+			}
+			
+		}
+		
 		return listReizigers;		
+		
+	}
+	
+	public List<OvChipkaart> findAllOvchipkaarten(int reizigerId) {
+		
+		ArrayList<OvChipkaart> ovChipkaartList = new ArrayList<OvChipkaart>();
+		String query = String.format("SELECT * FROM OV_CHIPKAART WHERE REIZIGERID=%d", reizigerId);
+		ResultSet rs = runQuery(query, true);
+		
+		try {
+			
+			while (rs.next()) {
+				
+				ovChipkaartList.add();
+				
+			}
+			
+		}
 		
 	}
 	

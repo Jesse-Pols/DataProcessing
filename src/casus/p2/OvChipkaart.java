@@ -1,7 +1,5 @@
 package casus.p2;
 
-import java.util.Date;
-
 public class OvChipkaart {
 	
 	private int kaartNummer;

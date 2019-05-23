@@ -1,6 +1,5 @@
 package casus.p2;
 
-import java.sql.Connection;
 import java.util.List;
 
 public interface ReizigerDao {

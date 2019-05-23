@@ -1,17 +1,15 @@
 package casus.p2;
 
-import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
 
-public class Reiziger implements Serializable{
+public class Reiziger {
 	
 	private int reizigerId;
 	private String voorLetters;
 	private String tussenVoegsel;
 	private String achterNaam;
 	private String gbDatum;
-	private ArrayList<OvChipkaart> allOvChipkaarten = new ArrayList();
+	private ArrayList<OvChipkaart> allOvChipkaarten = new ArrayList<OvChipkaart>();
 	
 	public Reiziger(int reizigerId, String voorLetters, String tussenVoegsel, String achterNaam, String gbDatum) {
 		this.reizigerId = reizigerId;

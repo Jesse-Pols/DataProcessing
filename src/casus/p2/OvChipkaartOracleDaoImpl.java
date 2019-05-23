@@ -1,6 +1,5 @@
 package casus.p2;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -63,6 +62,28 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		
 		this.closeStatement();
 		
+		query = String.format("SELECT * FROM REIZIGER WHERE REIZIGERID=%d", ovChipkaart.getReizigerId());
+		rs = runQuery(query, true);
+		
+		try {
+		
+			while (rs.next()) {
+				
+				Reiziger reiziger = new Reiziger(
+						rs.getInt("REIZIGERID"),
+						rs.getString("VOORLETTERS"),
+						rs.getString("TUSSENVOEGSEL"),
+						rs.getString("ACHTERNAAM"),
+						rs.getString("GEBORTEDATUM")						
+						);
+				ovChipkaart.setReiziger(reiziger);
+				
+			}
+			
+		} catch (Exception e) { System.out.println(e.getMessage()); }
+		
+		this.closeStatement();
+		
 		return ovChipkaart;
 		
 	}
@@ -92,6 +113,32 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		} catch (SQLException e) { System.out.println(e.getMessage()); } 
 		
 		this.closeStatement();
+		
+		for(OvChipkaart ovChipkaart : listOvChipkaart) {
+			
+			query = String.format("SELECT * FROM REIZIGER WHERE REIZIGERID=%d", ovChipkaart.getReiziger());
+			rs = runQuery(query, true);
+			
+			try {
+				
+				while (rs.next()) {
+					
+					reiziger = new Reiziger(
+							rs.getInt("REIZIGERID"),
+							rs.getString("VOORLETTERS"),
+							rs.getString("TUSSENVOEGSEL"),
+							rs.getString("ACHTERNAAM"),
+							rs.getString("GEBORTEDATUM")						
+							);
+					ovChipkaart.setReiziger(reiziger);
+					
+				}
+				
+			} catch (Exception e) { System.out.println(e.getMessage()); }
+			
+			this.closeStatement();
+			
+		}
 		
 		return listOvChipkaart;
 		
