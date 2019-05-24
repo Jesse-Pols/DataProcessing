@@ -1,7 +1,4 @@
-package casus.p3;
-
-import casus.pojo.OvChipkaart;
-import casus.pojo.Reiziger;
+package casus.p3.v1;
 
 public class Main {
 	public static void main(String[] args) {

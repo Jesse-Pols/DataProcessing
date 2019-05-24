@@ -1,5 +1,6 @@
 package casus.p3.v2.pojo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Reiziger {
@@ -10,8 +11,7 @@ public class Reiziger {
 	private String achternaam;
 	private String geboortedatum;
 	
-	private List<OvChipkaart> ovChipkaarten;
-	private List<Adres> addresses;
+	private ArrayList<OvChipkaart> ovChipkaarten;
 
 	public Reiziger (int reizigerId, String voorletters, String tussenvoegsel, String achternaam, String geboortedatum) {
 		this.reizigerId = reizigerId;
@@ -21,12 +21,12 @@ public class Reiziger {
 		this.geboortedatum = geboortedatum;
 	}
 	
-	public List<Adres> getAddresses() {
-		return addresses;
+	public void addOvChipkaart(OvChipkaart ovChipkaart) {
+		ovChipkaarten.add(ovChipkaart);
 	}
-
-	public void setAddresses(List<Adres> addresses) {
-		this.addresses = addresses;
+	
+	public void removeOvChipkaart(OvChipkaart ovChipkaart) {
+		ovChipkaarten.remove(ovChipkaart);
 	}
 
 	public int getReizigerId() {
@@ -71,10 +71,6 @@ public class Reiziger {
 	
 	public List<OvChipkaart> getOvChipkaarten() {
 		return ovChipkaarten;
-	}
-	
-	public void setOvChipkaarten(List<OvChipkaart> ovChipkaarten) {
-		this.ovChipkaarten = ovChipkaarten;
 	}
 
 }

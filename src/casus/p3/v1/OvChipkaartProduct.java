@@ -1,4 +1,4 @@
-package casus.pojo;
+package casus.p3.v1;
 
 public class OvChipkaartProduct {
 	

@@ -1,4 +1,4 @@
-package casus.oracle;
+package casus.p3.v1;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

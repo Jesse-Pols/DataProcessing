@@ -1,11 +1,7 @@
-package casus.p3;
+package casus.p3.v1;
 
 import java.sql.ResultSet;
 import java.util.List;
-
-import casus.oracle.OracleGlobal;
-import casus.pojo.OvChipkaart;
-import casus.pojo.Reiziger;
 
 public class ReizigerOracleDaoImpl extends OracleGlobal implements ReizigerDao {
 	

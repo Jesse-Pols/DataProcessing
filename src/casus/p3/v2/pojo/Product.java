@@ -1,5 +1,6 @@
 package casus.p3.v2.pojo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
@@ -7,15 +8,23 @@ public class Product {
 	private int productNummer;
 	private String productNaam;
 	private String beschrijving;
-	private float prijs;
+	private double prijs;
 	
-	private List<OvChipkaartProduct> ovChipkaartProducten;
+	private ArrayList<OvChipkaart> ovChipkaarten;
 	
-	public Product(int productNummer, String productNaam, String beschrijving, float prijs) {
+	public Product(int productNummer, String productNaam, String beschrijving, double prijs) {
 		this.productNummer = productNummer;
 		this.productNaam = productNaam;
 		this.beschrijving = beschrijving;
 		this.prijs = prijs;
+	}
+	
+	public void addOvChipkaart(OvChipkaart ovChipkaart) {
+		ovChipkaarten.add(ovChipkaart);
+	}
+	
+	public void removeOvChipkaart(OvChipkaart ovChipkaart) {
+		ovChipkaarten.remove(ovChipkaart);
 	}
 
 	public int getProductNummer() {
@@ -42,22 +51,12 @@ public class Product {
 		this.beschrijving = beschrijving;
 	}
 
-	public float getPrijs() {
+	public double getPrijs() {
 		return prijs;
 	}
 
-	public void setPrijs(float prijs) {
+	public void setPrijs(double prijs) {
 		this.prijs = prijs;
-	}
-
-	public List<OvChipkaartProduct> getOvChipkaartProducten() {
-		return ovChipkaartProducten;
-	}
-
-	public void setOvChipkaartProducten(List<OvChipkaartProduct> ovChipkaartProducten) {
-		this.ovChipkaartProducten = ovChipkaartProducten;
-	}
-	
-	
+	}	
 
 }

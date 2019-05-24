@@ -1,6 +1,4 @@
-package casus.p3;
-
-import casus.pojo.Reiziger;
+package casus.p3.v1;
 
 public interface ReizigerDao {
 	

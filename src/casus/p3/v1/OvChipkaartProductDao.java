@@ -1,8 +1,6 @@
-package casus.p3;
+package casus.p3.v1;
 
 import java.util.List;
-
-import casus.pojo.OvChipkaartProduct;
 
 public interface OvChipkaartProductDao {
 	

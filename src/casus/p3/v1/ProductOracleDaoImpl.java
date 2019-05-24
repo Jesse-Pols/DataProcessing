@@ -1,9 +1,6 @@
-package casus.p3;
+package casus.p3.v1;
 
 import java.sql.ResultSet;
-
-import casus.oracle.OracleGlobal;
-import casus.pojo.Product;
 
 public class ProductOracleDaoImpl extends OracleGlobal implements ProductDao {
 	

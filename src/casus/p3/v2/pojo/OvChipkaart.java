@@ -7,12 +7,12 @@ public class OvChipkaart {
 	private int kaartNummer;
 	private String geldigTot;
 	private int klasse;
-	private float saldo;
+	private double saldo;
 	
 	private Reiziger reiziger;
-	private List<OvChipkaartProduct> ovChipkaartProducten;
+	private List<Product> producten;
 	
-	public OvChipkaart (int kaartNummer, String geldigTot, int klasse, float saldo) {
+	public OvChipkaart (int kaartNummer, String geldigTot, int klasse, double saldo) {
 		this.kaartNummer = kaartNummer;
 		this.geldigTot = geldigTot;
 		this.klasse = klasse;
@@ -43,11 +43,11 @@ public class OvChipkaart {
 		this.klasse = klasse;
 	}
 
-	public float getSaldo() {
+	public double getSaldo() {
 		return saldo;
 	}
 
-	public void setSaldo(float saldo) {
+	public void setSaldo(double saldo) {
 		this.saldo = saldo;
 	}
 	
@@ -59,12 +59,16 @@ public class OvChipkaart {
 		this.reiziger = reiziger;
 	}
 	
-	public List<OvChipkaartProduct> getOvChipkaartProducten() {
-		return ovChipkaartProducten;
+	public List<Product> getProducten() {
+		return producten;
 	}
 	
-	public void setOvChipkaartProducten(List<OvChipkaartProduct> ovChipkaartProducten) {
-		this.ovChipkaartProducten = ovChipkaartProducten;
+	public void addProduct(Product product) {
+		this.producten.add(product);
+	}
+	
+	public void removeProduct(Product product) {
+		this.producten.remove(product);
 	}
 
 }

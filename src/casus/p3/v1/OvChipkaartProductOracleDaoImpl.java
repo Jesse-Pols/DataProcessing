@@ -1,11 +1,8 @@
-package casus.p3;
+package casus.p3.v1;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
-import casus.oracle.OracleGlobal;
-import casus.pojo.OvChipkaartProduct;
 
 public class OvChipkaartProductOracleDaoImpl extends OracleGlobal implements OvChipkaartProductDao {
 	
