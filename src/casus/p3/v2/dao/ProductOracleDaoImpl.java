@@ -21,6 +21,8 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		
+		OvChipkaartOracleDaoImpl odoci = null;
+		
 		try {
 			
 			preparedStatement = dbConnection.prepareStatement(
@@ -34,9 +36,9 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 			preparedStatement.setInt(1, productNummer);
 			rs = preparedStatement.executeQuery();
 			
+			if (rs.isBeforeFirst()) odoci = new OvChipkaartOracleDaoImpl();
+			
 			while (rs.next()) {
-				
-				OvChipkaartOracleDaoImpl odoci = new OvChipkaartOracleDaoImpl();
 							
 				if (recurse) ovChipkaart = odoci.findByKaartNummer(rs.getInt(2), false);
 				

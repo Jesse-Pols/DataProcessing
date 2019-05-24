@@ -16,6 +16,7 @@ public class Main {
 		
 		// Vind een Ov chipkaart
 		OvChipkaart ov_1 = odoci.findByKaartNummer(35283);
+		System.out.println(ov_1.getGeldigTot());
 		
 		// Vind een product
 		//Product p_1 = podi.findByProductNummer(1);

@@ -19,6 +19,8 @@ public class Reiziger {
 		this.tussenvoegsel = tussenvoegsel;
 		this.achternaam = achternaam;
 		this.geboortedatum = geboortedatum;
+		
+		ovChipkaarten = new ArrayList<OvChipkaart>();
 	}
 	
 	public void addOvChipkaart(OvChipkaart ovChipkaart) {

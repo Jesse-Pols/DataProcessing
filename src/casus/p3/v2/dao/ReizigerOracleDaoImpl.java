@@ -2,6 +2,7 @@ package casus.p3.v2.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import casus.p3.v2.interfaces.ReizigerDao;
 import casus.p3.v2.pojo.OvChipkaart;
@@ -16,9 +17,12 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao{
 	public Reiziger findById(int reizigerId, boolean recurse) {
 		
 		Reiziger reiziger = null;
+		ArrayList<OvChipkaart> ovChipkaarten = null;
 		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		
+		OvChipkaartOracleDaoImpl odoci = null;
 		
 		try {
 			
@@ -26,25 +30,32 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao{
 					"select * from REIZIGER where REIZIGERID=?");
 			ps.setInt(1, reizigerId);
 			rs = ps.executeQuery();
+			if (rs.isBeforeFirst()) odoci = new OvChipkaartOracleDaoImpl();
 			
-			while (rs.next()) {
-				
-				reiziger = new Reiziger(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
-				
-				OvChipkaartOracleDaoImpl odoci = new OvChipkaartOracleDaoImpl();
-				
-				for (OvChipkaart ovChipkaart : odoci.findByReizigerId(reiziger.getReizigerId(), recurse)) {
-					if (ovChipkaart != null) {
-						ovChipkaart.setReiziger(reiziger);
-						reiziger.addOvChipkaart(ovChipkaart);
-					}
-				};
-				
-			}
-			
-		} catch (Exception e) { System.out.println("Error -> Couldn't find Reiziger By Id: " + e.getMessage()); }
-		finally	{ try { ps.close(); rs.close(); } catch (Exception e) { System.out.println(e.getMessage()); }};
+		} catch (Exception e)
+		{ System.out.println("Reiziger FindById -> Query Failed: " + e.getMessage()); e.printStackTrace(); }
 		
+		try {
+		while (rs.next()) {			
+
+				reiziger = new Reiziger(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+				ovChipkaarten = odoci.findByReizigerId(rs.getInt(1), recurse);
+				
+				if (ovChipkaarten != null) {					
+					for (OvChipkaart ovChipkaart : ovChipkaarten) {
+						if (ovChipkaart != null) {
+							ovChipkaart.setReiziger(reiziger);
+							reiziger.addOvChipkaart(ovChipkaart);
+						}						
+					}					
+				}		
+		}
+		} catch (Exception e)
+		{ System.out.println(e.getMessage()); e.printStackTrace(); }
+		
+		try { ps.close(); rs.close(); }
+		catch (Exception e) { System.out.println(e.getMessage()); e.printStackTrace(); }
+
 		return reiziger;
 		
 	}

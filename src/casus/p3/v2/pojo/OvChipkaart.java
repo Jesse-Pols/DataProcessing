@@ -1,5 +1,6 @@
 package casus.p3.v2.pojo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OvChipkaart {
@@ -10,13 +11,14 @@ public class OvChipkaart {
 	private double saldo;
 	
 	private Reiziger reiziger;
-	private List<Product> producten;
+	private ArrayList<Product> producten;
 	
 	public OvChipkaart (int kaartNummer, String geldigTot, int klasse, double saldo) {
 		this.kaartNummer = kaartNummer;
 		this.geldigTot = geldigTot;
 		this.klasse = klasse;
 		this.saldo = saldo;
+		producten = new ArrayList<Product>();
 	}
 
 	public int getKaartNummer() {

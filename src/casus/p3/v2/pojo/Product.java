@@ -17,6 +17,8 @@ public class Product {
 		this.productNaam = productNaam;
 		this.beschrijving = beschrijving;
 		this.prijs = prijs;
+		
+		ovChipkaarten = new ArrayList<OvChipkaart>();
 	}
 	
 	public void addOvChipkaart(OvChipkaart ovChipkaart) {

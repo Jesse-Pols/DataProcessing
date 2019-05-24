@@ -48,6 +48,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 					
 					ProductOracleDaoImpl podi = new ProductOracleDaoImpl();
 					Product product = podi.findByProductNummer(rs.getInt(5), false);
+
 					if (product != null) {
 						ovChipkaart.addProduct(product);
 					}
@@ -75,6 +76,9 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		ResultSet rs = null;
 		PreparedStatement ps = null;
 		
+		ReizigerOracleDaoImpl rodi = null;
+		ProductOracleDaoImpl podi = null;
+		
 		try {
 			
 			ps = dbConnection.prepareStatement(
@@ -88,37 +92,42 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 			ps.setInt(1, reizigerId);
 			rs = ps.executeQuery();		
 			
+			if (rs.isBeforeFirst()) {
+				rodi = new ReizigerOracleDaoImpl();
+				podi = new ProductOracleDaoImpl();
+			}
+			
 			while (rs.next()) {
 				
 				boolean kaartExists = false;
+				int kaartNummer = rs.getInt(1);
+				
 				OvChipkaart ovChipkaart = null;
 				
-				ReizigerOracleDaoImpl rodi = new ReizigerOracleDaoImpl();
-				ProductOracleDaoImpl podi = new ProductOracleDaoImpl();
-				
 				for (OvChipkaart tempOvChipkaart : ovChipkaarten) {
-					if (rs.getInt(1) == tempOvChipkaart.getKaartNummer()) {
+					if (kaartNummer == tempOvChipkaart.getKaartNummer()) {
 						ovChipkaart = tempOvChipkaart;
 						kaartExists = true;
 					}
 				}
 				
 				if (!kaartExists) {
-					ovChipkaart = new OvChipkaart(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4));
+					ovChipkaart = new OvChipkaart(kaartNummer, rs.getString(2), rs.getInt(3), rs.getDouble(4));
 					
 					if (recurse) {
-					
 						Reiziger reiziger = rodi.findById(rs.getInt(5), false);
 						ovChipkaart.setReiziger(reiziger);
-						
 					}
 					
 					ovChipkaarten.add(ovChipkaart);
-					
-				}				
+				}
 				
-				Product product = podi.findByProductNummer(rs.getInt(6), false);
-				if (product != null) ovChipkaart.addProduct(product);
+				try {
+					int productNummer = rs.getInt(6);
+					
+					Product product = podi.findByProductNummer(productNummer, false);
+					if (product != null) ovChipkaart.addProduct(product);					
+				} catch (Exception e) { e.printStackTrace(); }
 				
 			}
 			
