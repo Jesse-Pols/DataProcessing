@@ -11,6 +11,83 @@ import casus.p3.v2.pojo.Reiziger;
 
 public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaartDao {	
 	
+	public ArrayList<OvChipkaart> findAll() {
+		
+		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		ReizigerOracleDaoImpl rodi = null;
+		ProductOracleDaoImpl podi = null;
+		
+		try {
+			
+			ps = dbConnection.prepareStatement(
+					"SELECT ovchipkaart.kaartnummer, ovchipkaart.geldigtot, ovchipkaart.klasse, ovchipkaart.saldo, ovchipkaart.reizigerid, p.productnummer "
+					+ "FROM ov_chipkaart_product ovproduct "
+					+ "RIGHT OUTER JOIN ov_chipkaart ovchipkaart "
+					+ "ON ovproduct.kaartnummer = ovchipkaart.kaartnummer "
+					+ "LEFT OUTER JOIN product p "
+					+ "ON p.productnummer = ovproduct.productnummer");
+			rs = ps.executeQuery();
+			if (rs.isBeforeFirst()) {
+				rodi = new ReizigerOracleDaoImpl();
+				podi = new ProductOracleDaoImpl();
+			}
+			
+		} catch (Exception e)
+		{ System.out.println("OvChipkaart findAll() -> Query failed: " + e.getMessage()); e.printStackTrace(); }
+		
+		try {
+			while(rs.next()) {
+				
+				boolean kaartExists = false;
+				int kaartNummer = rs.getInt(1);
+				OvChipkaart ovChipkaart = null;
+				
+				// Elke kaart in ovChipkaarten wordt gecheckt, als de huidige kaart van rs er in staat word Exists = true, 
+				//en wordt de volgende statement geskipt.
+				for (OvChipkaart tempOvChipkaart : ovChipkaarten) {
+					if (kaartNummer == tempOvChipkaart.getKaartNummer()) {
+						ovChipkaart = tempOvChipkaart;
+						kaartExists = true;
+					}
+				}
+				
+				if (!kaartExists) {
+					// Als kaart nog niet in ovChipkaarten staat: 
+					ovChipkaart = new OvChipkaart(rs.getInt(1), rs.getDate(2), rs.getInt(3), rs.getFloat(4));
+////					Reiziger reiziger = rodi.findById(rs.getInt(5));
+	//				ovChipkaart.setReiziger(reiziger);
+					ovChipkaarten.add(ovChipkaart);
+				}
+				
+				// Voeg product toe aan ovChipkaart ??zonder toe te voegen aan ovChipkaarten??
+				int productNummer = rs.getInt(6);
+//				Product product = podi.findByProductNummer(productNummer, false);
+	//			if (product != null) ovChipkaart.addProduct(product);
+				
+			}
+		} catch (Exception e)
+		{ System.out.println("OvChipkaart findAll() -> Failed: " + e.getMessage()); e.printStackTrace(); }
+		
+		try { ps.close(); rs.close();
+		} catch (Exception e) { System.out.println(e.getMessage()); e.printStackTrace(); }
+		
+		
+		return ovChipkaarten;
+		
+	}
+	
+	
+	
+	
+	
+	/*
+	
+	
+	
 	public OvChipkaart findByKaartNummer(int kaartNummer) {
 		return findByKaartNummer(kaartNummer, true);
 	}
@@ -22,6 +99,9 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		
 		OvChipkaart ovChipkaart = null;
 		Reiziger reiziger = null;
+		
+		ReizigerOracleDaoImpl rodi = null;
+		ProductOracleDaoImpl podi = null;
 		
 		try {
 			
@@ -35,10 +115,16 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 					+ "WHERE ovkaart.KAARTNUMMER=?");
 			ps.setInt(1, kaartNummer);
 			rs = ps.executeQuery();
+			if (rs.isBeforeFirst()) {
+				rodi = new ReizigerOracleDaoImpl();
+				podi = new ProductOracleDaoImpl();
+			}
 			
+		} catch (Exception e)
+		{ System.out.println("OvChipkaart FindByKaartNummer -> Query Failed: " + e.getMessage()); e.printStackTrace(); };
+		
+		try {			
 			while (rs.next()) {
-				
-				ReizigerOracleDaoImpl rodi = new ReizigerOracleDaoImpl();
 				
 				ovChipkaart = new OvChipkaart(kaartNummer, rs.getString(1), rs.getInt(2), rs.getDouble(3));
 				reiziger = rodi.findById(rs.getInt(4), false);
@@ -46,7 +132,6 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 				
 				if (recurse) {
 					
-					ProductOracleDaoImpl podi = new ProductOracleDaoImpl();
 					Product product = podi.findByProductNummer(rs.getInt(5), false);
 
 					if (product != null) {
@@ -55,12 +140,10 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 					
 				}
 				
-			}
-			
-			
+			}			
 		} catch (Exception e) { System.out.println("Error -> Couldn't find OVchipkaart By Kaartnummer: " + e.getMessage()); }
 		finally	{ try { ps.close(); rs.close(); } catch (Exception e) { System.out.println(e.getMessage()); }};			
-		
+
 		return ovChipkaart;
 		
 	}
@@ -137,6 +220,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		return ovChipkaarten;
 		
 	}
+	*/
 	
 	
 	

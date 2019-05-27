@@ -74,5 +74,20 @@ public class Reiziger {
 	public List<OvChipkaart> getOvChipkaarten() {
 		return ovChipkaarten;
 	}
+	
+	public String toString() {
+		String s = "";
+		s += "ReizigerId: " + this.reizigerId;
+		s += "\nVoorletters: " + this.voorletters;
+		s += "\nTussenvoegsel: " + this.tussenvoegsel;
+		s += "\nAchternaam: " + this.achternaam;
+		s += "\nGeboortedatum: " + this.geboortedatum;
+		s += "\nOvChipkaarten: ";
+		for (OvChipkaart ovChipkaart : this.ovChipkaarten)
+			s += "\n" + ovChipkaart.getKaartNummer();
+		
+		
+		return s + "\n";		
+	}
 
 }

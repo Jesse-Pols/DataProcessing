@@ -10,6 +10,7 @@ import casus.p3.v2.pojo.Reiziger;
 
 public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao{
 	
+	/*
 	public Reiziger findById(int reizigerId) {
 		return findById(reizigerId, false);
 	}
@@ -59,6 +60,7 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao{
 		return reiziger;
 		
 	}
+	*/
 	
 	/*
 	PreparedStatement insertReiziger;

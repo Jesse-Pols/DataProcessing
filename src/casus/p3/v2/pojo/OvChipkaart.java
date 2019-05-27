@@ -1,19 +1,20 @@
 package casus.p3.v2.pojo;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OvChipkaart {
 	
 	private int kaartNummer;
-	private String geldigTot;
+	private Date geldigTot;
 	private int klasse;
 	private double saldo;
 	
 	private Reiziger reiziger;
 	private ArrayList<Product> producten;
 	
-	public OvChipkaart (int kaartNummer, String geldigTot, int klasse, double saldo) {
+	public OvChipkaart (int kaartNummer, Date geldigTot, int klasse, double saldo) {
 		this.kaartNummer = kaartNummer;
 		this.geldigTot = geldigTot;
 		this.klasse = klasse;
@@ -29,11 +30,11 @@ public class OvChipkaart {
 		this.kaartNummer = kaartNummer;
 	}
 
-	public String getGeldigTot() {
+	public Date getGeldigTot() {
 		return geldigTot;
 	}
 
-	public void setGeldigTot(String geldigTot) {
+	public void setGeldigTot(Date geldigTot) {
 		this.geldigTot = geldigTot;
 	}
 
@@ -71,6 +72,25 @@ public class OvChipkaart {
 	
 	public void removeProduct(Product product) {
 		this.producten.remove(product);
+	}
+	
+	public String toString() {
+		String s = "";
+		s += "Kaartnummer: " + this.kaartNummer;
+		s += "\nGeldig tot: " + this.geldigTot;
+		s += "\nKlasse: " + this.klasse;
+		s += "\nSaldo: " + this.saldo;
+		
+		s += "\nReiziger: " + this.reiziger.getVoorletters() + " ";
+		if (this.reiziger.getTussenvoegsel() != null || this.reiziger.getTussenvoegsel() == "")
+			s += this.reiziger.getTussenvoegsel() + " ";
+		s += this.reiziger.getAchternaam();
+		
+		s += "\nProducten: ";
+		for (Product product : this.producten)
+			s += product.getProductNaam() + " " + product.getProductNummer();		
+		
+		return s + "\n";
 	}
 
 }

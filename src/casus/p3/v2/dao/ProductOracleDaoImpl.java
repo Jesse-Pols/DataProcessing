@@ -9,6 +9,7 @@ import casus.p3.v2.pojo.Product;
 
 public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 	
+	/*
 	public Product findByProductNummer(int productNummer) {
 		return findByProductNummer(productNummer, true);
 	}
@@ -18,14 +19,14 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 		Product product = null;
 		OvChipkaart ovChipkaart = null;
 		
-		PreparedStatement preparedStatement = null;
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
 		OvChipkaartOracleDaoImpl odoci = null;
 		
 		try {
 			
-			preparedStatement = dbConnection.prepareStatement(
+			ps = dbConnection.prepareStatement(
 					"SELECT p.PRODUCTNUMMER, ovkaart.KAARTNUMMER, p.PRODUCTNAAM, p.BESCHRIJVING, p.PRIJS "
 					+ "FROM ov_chipkaart_product ovkaartproduct "
 					+ "RIGHT OUTER JOIN product p "
@@ -33,25 +34,27 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 					+ "LEFT OUTER JOIN ov_chipkaart ovkaart "
 					+ "ON ovkaartproduct.KAARTNUMMER = ovkaart.KAARTNUMMER "
 					+ "WHERE p.PRODUCTNUMMER = ?");
-			preparedStatement.setInt(1, productNummer);
-			rs = preparedStatement.executeQuery();
+			ps.setInt(1, productNummer);
+			rs = ps.executeQuery();
 			
 			if (rs.isBeforeFirst()) odoci = new OvChipkaartOracleDaoImpl();
 			
 			while (rs.next()) {
 							
-				if (recurse) ovChipkaart = odoci.findByKaartNummer(rs.getInt(2), false);
-				
-				product = new Product(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getDouble(5));
-				if (ovChipkaart != null) product.addOvChipkaart(ovChipkaart);
+				if (product == null) product = new Product(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getDouble(5));
+				if (recurse) {
+					ovChipkaart = odoci.findByKaartNummer(rs.getInt(2));
+					if (ovChipkaart != null) product.addOvChipkaart(ovChipkaart);
+				}				
 				
 			}
 			
 		} catch (Exception e) { System.out.println("Error -> Couldn't find Product By Nummer: " + e.getMessage()); }
-		finally	{ try { preparedStatement.close(); rs.close(); } catch (Exception e) { System.out.println(e.getMessage()); }};		
+		finally	{ try { ps.close(); rs.close(); } catch (Exception e) { System.out.println(e.getMessage()); }};		
 		
 		return product;
 		
 	}
+	*/
 
 }

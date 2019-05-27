@@ -4,6 +4,7 @@ import casus.p3.v2.dao.OvChipkaartOracleDaoImpl;
 import casus.p3.v2.dao.ProductOracleDaoImpl;
 import casus.p3.v2.dao.ReizigerOracleDaoImpl;
 import casus.p3.v2.pojo.OvChipkaart;
+import casus.p3.v2.pojo.Product;
 
 public class Main {
 	public static void main(String[] args) {
@@ -14,12 +15,32 @@ public class Main {
 		ProductOracleDaoImpl podi = new ProductOracleDaoImpl();
 		ReizigerOracleDaoImpl rodi = new ReizigerOracleDaoImpl();
 		
-		// Vind een Ov chipkaart
-		OvChipkaart ov_1 = odoci.findByKaartNummer(35283);
-		System.out.println(ov_1.getGeldigTot());
+	//	OvChipkaart ov_1 = odoci.findByKaartNummer(35283);
+		//System.out.println("ov_1: \n" + ov_1.toString());
 		
-		// Vind een product
-		//Product p_1 = podi.findByProductNummer(1);
+//		Product p_1 = podi.findByProductNummer(1);
+		//System.out.println("p_1: \n" + p_1.toString());
+		
+///		p_1.removeOvChipkaart(ov_1);
+		//System.out.println("p_1: \n" + p_1.toString());
+		
+		
+		/*
+		OvChipkaart ov_1 = odoci.findByKaartNummer(35283);
+		OvChipkaart ov_2 = odoci.findByKaartNummer(79625);
+		System.out.println("ov_1: ");
+		System.out.println(ov_1.toString());
+		System.out.println("ov_2: ");
+		System.out.println(ov_2.toString());
+		
+		Product p_1 = podi.findByProductNummer(1);
+		System.out.println("p_1 : ");
+		System.out.println(p_1.toString());
+		
+		p_1.removeOvChipkaart(ov_2);
+		System.out.println("p_1 zonder ov_1: ");
+		System.out.println(p_1.toString());
+		*/
 		
 		
 		
@@ -71,7 +92,7 @@ public class Main {
 		rodi.delete(reiziger_6);
 		*/
 		
-		System.out.println("Ended");
+		System.out.println("Finished");
 		
 	}
 }

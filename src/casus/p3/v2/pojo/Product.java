@@ -1,7 +1,6 @@
 package casus.p3.v2.pojo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Product {
 	
@@ -60,5 +59,32 @@ public class Product {
 	public void setPrijs(double prijs) {
 		this.prijs = prijs;
 	}	
+	
+	public boolean equals(Object object) {
+		if (object instanceof Product) {
+			Product product = (Product) object;
+			
+			if (product.getProductNummer() == this.productNummer &&
+					product.getProductNaam().equals(this.productNaam) &&
+					product.getBeschrijving().equals(this.beschrijving) &&
+					product.getPrijs() == this.prijs)
+				return true;
+		}
+		return false;
+	}
+	
+	public String toString() {
+		String s = "";
+		s += "Productnummer: " + this.productNummer;
+		s += "\nProductnaam: " + this.productNaam;
+		s += "\nBeschrijving: " + this.beschrijving;
+		s += "\nPrijs: " + this.prijs;
+		
+		s += "\nOvChipkaarten: ";
+		for (OvChipkaart ovChipkaart : this.ovChipkaarten)
+			s += ovChipkaart.getKaartNummer() + " ";
+		
+		return s + "\n";
+	}
 
 }
