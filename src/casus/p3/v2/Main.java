@@ -1,19 +1,16 @@
 package casus.p3.v2;
 
-import casus.p3.v2.dao.OvChipkaartOracleDaoImpl;
-import casus.p3.v2.dao.ProductOracleDaoImpl;
-import casus.p3.v2.dao.ReizigerOracleDaoImpl;
-import casus.p3.v2.pojo.OvChipkaart;
-import casus.p3.v2.pojo.Product;
-
 public class Main {
 	public static void main(String[] args) {
 		
 		System.out.println("Started");	
 		
+		/*
+		
 		OvChipkaartOracleDaoImpl odoci = new OvChipkaartOracleDaoImpl();
 		ProductOracleDaoImpl podi = new ProductOracleDaoImpl();
 		ReizigerOracleDaoImpl rodi = new ReizigerOracleDaoImpl();
+		*/
 		
 	//	OvChipkaart ov_1 = odoci.findByKaartNummer(35283);
 		//System.out.println("ov_1: \n" + ov_1.toString());

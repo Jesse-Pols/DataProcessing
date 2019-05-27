@@ -102,10 +102,10 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 	}
 	
 	// Get Reiziger by Geboortedatum
-	public Reiziger findByGbDatum(String gbDatum) {
+	public ArrayList<Reiziger> findByGbDatum(String gbDatum) {
 		System.out.println("Trying to find by gbdate");
 		
-		Reiziger reiziger = null;
+		ArrayList<Reiziger> reizigers = null;
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
 		
 		ResultSet rs = null;
@@ -124,7 +124,7 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		
 		try {
 			while (rs.next()) {
-				reiziger = new Reiziger(
+				Reiziger reiziger = new Reiziger(
 						rs.getInt(1),
 						rs.getString(2),
 						rs.getString(3),
@@ -133,6 +133,7 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 						);
 				ovChipkaarten = odoci.findByReiziger(reiziger);
 				reiziger.setOvChipkaarten(ovChipkaarten);
+				reizigers.add(reiziger);
 			}
 		} catch (Exception e)
 		{ e.printStackTrace(); }
@@ -140,7 +141,7 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		try { ps.close(); rs.close(); } catch (Exception e)
 		{ e.printStackTrace(); }
 		
-		return reiziger;
+		return reizigers;
 		
 	}
 	

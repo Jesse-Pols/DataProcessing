@@ -3,8 +3,8 @@ package casus.p3.v1;
 public class Main {
 	public static void main(String[] args) {
 		
-		ReizigerOracleDaoImpl rodi = new ReizigerOracleDaoImpl();	
-		OvChipkaartOracleDaoImpl ocodi = new OvChipkaartOracleDaoImpl();	
+		//ReizigerOracleDaoImpl rodi = new ReizigerOracleDaoImpl();	
+		//OvChipkaartOracleDaoImpl ocodi = new OvChipkaartOracleDaoImpl();	
 		
 		
 		
