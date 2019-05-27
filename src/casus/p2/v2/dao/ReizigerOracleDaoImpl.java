@@ -105,7 +105,7 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 	public ArrayList<Reiziger> findByGbDatum(String gbDatum) {
 		System.out.println("Trying to find by gbdate");
 		
-		ArrayList<Reiziger> reizigers = new ArrayList<Reiziger>;
+		ArrayList<Reiziger> reizigers = new ArrayList<Reiziger>();
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
 		
 		ResultSet rs = null;
