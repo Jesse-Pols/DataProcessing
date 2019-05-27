@@ -1,7 +1,12 @@
-package casus.p2;
+package casus.p2.v1;
 
 import java.sql.SQLException;
 import java.util.List;
+
+import casus.p2.v1.dao.OvChipkaartOracleDaoImpl;
+import casus.p2.v1.dao.ReizigerOracleDaoImpl;
+import casus.p2.v1.pojo.OvChipkaart;
+import casus.p2.v1.pojo.Reiziger;
 
 public class Main {
 	@SuppressWarnings("unused")

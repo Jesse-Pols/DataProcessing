@@ -1,4 +1,4 @@
-package casus.p2;
+package casus.p2.v1.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,6 +6,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import casus.p2.v1.interfaces.OvChipkaartDao;
+import casus.p2.v1.pojo.OvChipkaart;
+import casus.p2.v1.pojo.Reiziger;
 
 public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaartDao  {
 	

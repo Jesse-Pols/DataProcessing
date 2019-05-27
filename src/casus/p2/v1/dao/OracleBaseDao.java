@@ -1,4 +1,4 @@
-package casus.p2;
+package casus.p2.v1.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
