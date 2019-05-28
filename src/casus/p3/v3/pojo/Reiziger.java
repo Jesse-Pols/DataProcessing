@@ -1,5 +1,6 @@
 package casus.p3.v3.pojo;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +10,11 @@ public class Reiziger {
 	private String voorletters;
 	private String tussenvoegsel;
 	private String achternaam;
-	private String geboortedatum;
+	private Date geboortedatum;
 	
 	private ArrayList<OvChipkaart> ovChipkaarten;
 
-	public Reiziger (int reizigerId, String voorletters, String tussenvoegsel, String achternaam, String geboortedatum) {
+	public Reiziger (int reizigerId, String voorletters, String tussenvoegsel, String achternaam, Date geboortedatum) {
 		this.reizigerId = reizigerId;
 		this.voorletters = voorletters;
 		this.tussenvoegsel = tussenvoegsel;
@@ -63,11 +64,11 @@ public class Reiziger {
 		this.achternaam = achternaam;
 	}
 
-	public String getGeboortedatum() {
+	public Date getGeboortedatum() {
 		return geboortedatum;
 	}
 
-	public void setGeboortedatum(String geboortedatum) {
+	public void setGeboortedatum(Date geboortedatum) {
 		this.geboortedatum = geboortedatum;
 	}
 	

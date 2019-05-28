@@ -1,9 +1,6 @@
 package casus.p3.v3.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
 
 import casus.p3.v3.interfaces.OvChipkaartDao;
 import casus.p3.v3.pojo.OvChipkaart;
@@ -11,11 +8,12 @@ import casus.p3.v3.pojo.Product;
 import casus.p3.v3.pojo.Reiziger;
 
 public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaartDao {
-	/*
 	
 	public ArrayList<OvChipkaart> findAll() {
 		
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
+		rodi = new ReizigerOracleDaoImpl();
+		podi = new ProductOracleDaoImpl();
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -26,12 +24,8 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 					+ "LEFT OUTER JOIN product p "
 					+ "on p.productnummer = ovproduct.productnummer");
 			rs = ps.executeQuery();
-			if (rs.isBeforeFirst()) {
-				rodi = new ReizigerOracleDaoImpl();
-				podi = new ProductOracleDaoImpl();
-			}
 		} catch (Exception e)
-		{ e.printStackTrace(); }
+		{ System.out.println("OvChipkaartOracleDaoImpl/findAll()/Query Failed: \n" + e.getMessage()); }
 		
 		try {
 			while(rs.next()) {
@@ -52,7 +46,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 				if (!kaartExists) {
 					ovChipkaart = new OvChipkaart(rs.getInt(1), rs.getDate(2), rs.getInt(3), rs.getDouble(4));
 					
-					Reiziger reiziger = rodi.findById(rs.getInt(5));
+					Reiziger reiziger = rodi.find(rs.getInt(5));
 					ovChipkaart.setReiziger(reiziger);
 					
 					Product product = podi.findByProductNummer(rs.getInt(6), false);
@@ -60,12 +54,12 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 					
 					ovChipkaarten.add(ovChipkaart);				
 				}
-			}		
+			}
 		} catch (Exception e)
-		{ e.printStackTrace(); }
+		{ System.out.println("OvChipkaartOracleDaoImpl/findAll()/while(rs.next()) Failed: \n" + e.getMessage()); }
 		
-		try { ps.close(); rs.close(); } catch (Exception e)
-		{ e.printStackTrace(); }
+		return ovChipkaarten;
+		
 	}
 	
 	public ArrayList<OvChipkaart> findAllByReizigerId(int reizigerId) {
@@ -75,6 +69,8 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	public ArrayList<OvChipkaart> findAllByReizigerId(int reizigerId, boolean recurse){
 		
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
+		rodi = new ReizigerOracleDaoImpl();
+		podi = new ProductOracleDaoImpl();
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -85,13 +81,10 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 					+ "LEFT OUTER JOIN product p "
 					+ "ON p.productnummer = ovproduct.productnummer "
 					+ "WHERE ovkaart.reizigerid=?");
+			ps.setInt(1, reizigerId);
 			rs = ps.executeQuery();
-			if (rs.isBeforeFirst()) {
-				rodi = new ReizigerOracleDaoImpl();
-				podi = new ProductOracleDaoImpl();
-			}
 		} catch (Exception e)
-		{ e.printStackTrace(); }
+		{ System.out.println("OvChipkaartOracleDaoImpl/findAllByReizigerId()/Query Failed: " + e.getMessage()); }
 		
 		try {
 			while (rs.next()) {
@@ -110,7 +103,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 				if (!kaartExists) {
 					ovChipkaart = new OvChipkaart(rs.getInt(1), rs.getDate(2), rs.getInt(3), rs.getDouble(4));
 					if (recurse) {
-						Reiziger reiziger = rodi.findById(rs.getInt(5), false);
+						Reiziger reiziger = rodi.find(rs.getInt(5), false);
 						ovChipkaart.setReiziger(reiziger);
 					}
 					Product product = podi.findByProductNummer(rs.getInt(6), false);
@@ -120,10 +113,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 				}				
 			}
 		} catch (Exception e)
-		{ e.printStackTrace(); }
-		
-		try { ps.close(); rs.close(); } catch (Exception e)
-		{ e.printStackTrace(); }
+		{ System.out.println("OvChipkaartOracleDaoImpl/findAllByReizigerId()/rs.next() Failed: " + e.getMessage()); }
 		
 		return ovChipkaarten;
 	}
@@ -135,6 +125,8 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	public OvChipkaart find(int kaartNummer, boolean recurse) {
 		
 		OvChipkaart ovChipkaart = null;
+		rodi = new ReizigerOracleDaoImpl();
+		podi = new ProductOracleDaoImpl();
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -146,17 +138,13 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 					+ "ON p.productnummer = ovproduct.productnummer "
 					+ "WHERE ovkaart.kaartnummer=?");
 			rs = ps.executeQuery();
-			if (rs.isBeforeFirst()) {
-				rodi = new ReizigerOracleDaoImpl();
-				podi = new ProductOracleDaoImpl();
-			}
 		} catch (Exception e)
-		{ e.printStackTrace(); }
+		{ System.out.println("OvChipkaartOracleDaoImpl/find()/Query Failed: " + e.getMessage()); }
 		
 		try {
 			while(rs.next()) {
 				ovChipkaart = new OvChipkaart(kaartNummer, rs.getDate(1), rs.getInt(2), rs.getDouble(3));
-				Reiziger reiziger = rodi.findById(rs.getInt(4), false);
+				Reiziger reiziger = rodi.find(rs.getInt(4), false);
 				ovChipkaart.setReiziger(reiziger);
 				
 				if (recurse) {
@@ -165,15 +153,16 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 				}
 			}
 		} catch (Exception e)
-		{ e.printStackTrace(); }
+		{ System.out.println("OvChipkaartOracleDaoImpl/find()/rs.next() Failed: " + e.getMessage()); }
 		
-		try { ps.close(); rs.close(); } catch (Exception e)
-		{ e.printStackTrace(); }
 		return ovChipkaart;
 		
 	}
 	
 	public void save(OvChipkaart ovChipkaart) {
+		
+		rodi = new ReizigerOracleDaoImpl();
+		podi = new ProductOracleDaoImpl();
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -197,7 +186,6 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 				java.util.Date date = new java.util.Date();
 				ps.setDate(4,  new java.sql.Date(date.getTime()));
 				ps.executeQuery();
-				ps.close();
 			}			
 		} catch (Exception e)
 		{ e.printStackTrace(); }
@@ -205,6 +193,9 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	}
 	
 	public OvChipkaart update(OvChipkaart ovChipkaart) {
+		
+		rodi = new ReizigerOracleDaoImpl();
+		podi = new ProductOracleDaoImpl();
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -215,7 +206,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 			ps.setInt(4, ovChipkaart.getReiziger().getReizigerId());
 			ps.setInt(5, ovChipkaart.getKaartNummer());
 			ps.executeQuery();			
-			ps.close();
+			
 			
 		} catch (Exception e)
 		{ e.printStackTrace(); }
@@ -225,7 +216,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 					"SELECT productnummer FROM ov_chipkaart_product WHERE kaartnummer=?");
 			ps.setInt(1, ovChipkaart.getKaartNummer());
 			rs = ps.executeQuery();
-			ps.close();
+			
 			
 			ArrayList<Integer> localProductNummers = new ArrayList<Integer>();
 			ArrayList<Integer> databaseProductNummers = new ArrayList<Integer>();
@@ -252,7 +243,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 					java.util.Date date = new java.util.Date();
 					ps.setDate(4, new java.sql.Date(date.getTime()));
 					ps.executeQuery();
-					ps.close();
+					
 				}
 			}
 			
@@ -262,7 +253,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 					ps.setInt(1, ovChipkaart.getKaartNummer());
 					ps.setInt(2, productNummer);
 					ps.executeQuery();
-					ps.close();
+					
 				}
 			}				
 		} catch (Exception e)
@@ -278,6 +269,9 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	
 	public void delete(OvChipkaart ovChipkaart) {
 		
+		rodi = new ReizigerOracleDaoImpl();
+		podi = new ProductOracleDaoImpl();
+		
 		try {
 			for (Product product : ovChipkaart.getProducten()) {
 				ps = dbConnection.prepareStatement(
@@ -285,18 +279,17 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 				ps.setInt(1, ovChipkaart.getKaartNummer());
 				ps.setInt(2, product.getProductNummer());
 				ps.executeQuery();
-				ps.close();
+				
 			}
 			
 			ps = dbConnection.prepareStatement(
 					"DELETE FROM ov_chipkaart WHERE kaartnummer=?");
 			ps.setInt(1, ovChipkaart.getKaartNummer());
 			ps.executeQuery();
-			ps.close();					
+								
 		} catch (Exception e)
 		{ e.printStackTrace(); }
 		
 	}
-	*/
 		
 }
