@@ -12,6 +12,8 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	public OvChipkaart find(int kaartNummer) {
 		System.out.println("Trying to find kaart: " + kaartNummer);
 		
+		ReizigerOracleDaoImpl rodi = null;
+		
 		OvChipkaart ovChipkaart = null;
 		Reiziger reiziger = null;
 		
@@ -52,6 +54,8 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
 		ArrayList<Reiziger> reizigers = new ArrayList<Reiziger>();
+		
+		ReizigerOracleDaoImpl rodi = null;
 		
 		try {
 			ps = dbConnection.prepareStatement(

@@ -1,7 +1,5 @@
 package casus.p3.v3.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import casus.p3.v3.interfaces.ProductDao;
@@ -14,12 +12,6 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 	public ArrayList<Product> findAll() {
 		
 		ArrayList<Product> producten = new ArrayList<Product>();
-		
-		ResultSet rs = null;
-		PreparedStatement ps = null;
-		
-		OvChipkaartOracleDaoImpl odoci = null;
-		ReizigerOracleDaoImpl rodi = null;
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -74,16 +66,9 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 	
 	public ArrayList<Product> findByKaartNummer(int kaartNummer){
 		
-		ArrayList<Product> producten = new ArrayList<Product>();
-		
-		ResultSet rs = null;
-		PreparedStatement ps = null;
-		
-		OvChipkaartOracleDaoImpl odoci = null;
-		ReizigerOracleDaoImpl rodi = null;
-		
+		ArrayList<Product> producten = new ArrayList<Product>();		
 		
 		return producten;
 	}
-*/
+	*/
 }

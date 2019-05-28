@@ -2,6 +2,8 @@ package casus.p3.v3.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class OracleBaseDao {
@@ -16,6 +18,9 @@ public abstract class OracleBaseDao {
 	OvChipkaartOracleDaoImpl odoci = null;
 	ReizigerOracleDaoImpl rodi = null;
 	ProductOracleDaoImpl podi = null;
+	
+	ResultSet rs = null;
+	PreparedStatement ps = null;
 	
 	protected Connection getConnection(){
 		

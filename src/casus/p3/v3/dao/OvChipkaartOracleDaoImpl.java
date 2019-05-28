@@ -17,9 +17,6 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
 		
-		ResultSet rs = null;
-		PreparedStatement ps = null;
-		
 		try {
 			ps = dbConnection.prepareStatement(
 					"SELECT ovkaart.kaartnummer, ovkaart.geldigtot, ovkaart.klasse, ovkaart.saldo, ovkaart.reizigerid, p.productnummer "
@@ -79,9 +76,6 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
 		
-		ResultSet rs = null;
-		PreparedStatement ps = null;
-		
 		try {
 			ps = dbConnection.prepareStatement(
 					"SELECT ovkaart.kaartnummer, ovkaart.geldigtot, ovkaart.klasse, ovkaart.saldo, ovkaart.reizigerid, p.productnummer "
@@ -140,9 +134,6 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	
 	public OvChipkaart find(int kaartNummer, boolean recurse) {
 		
-		ResultSet rs = null;
-		PreparedStatement ps = null;
-		
 		OvChipkaart ovChipkaart = null;
 		
 		try {
@@ -184,8 +175,6 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	
 	public void save(OvChipkaart ovChipkaart) {
 		
-		PreparedStatement ps = null;
-		
 		try {
 			ps = dbConnection.prepareStatement(
 					"INSERT INTO ov_chipkaart VALUES (?, ?, ?, ?, ?)");
@@ -216,9 +205,6 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	}
 	
 	public OvChipkaart update(OvChipkaart ovChipkaart) {
-		
-		PreparedStatement ps = null;
-		ResultSet rs = null;
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -291,8 +277,6 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	}
 	
 	public void delete(OvChipkaart ovChipkaart) {
-		
-		PreparedStatement ps = null;
 		
 		try {
 			for (Product product : ovChipkaart.getProducten()) {

@@ -14,6 +14,8 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		Reiziger reiziger = null;
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
 		
+		OvChipkaartOracleDaoImpl odoci = null;
+		
 		try {
 			ps = dbConnection.prepareStatement(
 					"SELECT voorletters, tussenvoegsel, achternaam, gebortedatum FROM reiziger WHERE reizigerid=?");
@@ -52,6 +54,8 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		
 		ArrayList<Reiziger> reizigers = new ArrayList<Reiziger>();
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
+		
+		OvChipkaartOracleDaoImpl odoci = null;
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -95,6 +99,8 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		
 		ArrayList<Reiziger> reizigers = new ArrayList<Reiziger>();
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
+		
+		OvChipkaartOracleDaoImpl odoci = null;
 		
 		try {
 			ps = dbConnection.prepareStatement(
