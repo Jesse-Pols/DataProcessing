@@ -1,7 +1,5 @@
 package casus.p2.v2.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import casus.p2.v2.interfaces.OvChipkaartDao;
@@ -16,11 +14,6 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		
 		OvChipkaart ovChipkaart = null;
 		Reiziger reiziger = null;
-		
-		ResultSet rs = null;
-		PreparedStatement ps = null;
-		
-		ReizigerOracleDaoImpl rodi = null;
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -60,10 +53,6 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
 		ArrayList<Reiziger> reizigers = new ArrayList<Reiziger>();
 		
-		ReizigerOracleDaoImpl rodi = null;
-		
-		ResultSet rs = null;
-		PreparedStatement ps = null;
 		try {
 			ps = dbConnection.prepareStatement(
 					"SELECT kaartnummer, geldigtot, klasse, saldo, reizigerid FROM ov_chipkaart");
@@ -103,9 +92,6 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
 		
-		ResultSet rs = null;
-		PreparedStatement ps = null;
-		
 		try {
 			ps = dbConnection.prepareStatement(
 					"SELECT kaartnummer, geldigtot, klasse, saldo FROM ov_chipkaart WHERE reizigerid=?");
@@ -138,7 +124,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	public boolean save (OvChipkaart ovChipkaart) {
 				
 		try {
-			PreparedStatement ps = dbConnection.prepareStatement(
+			ps = dbConnection.prepareStatement(
 					"INSERT INTO ov_chipkaart VALUES (?, ?, ?, ?, ?)");
 			ps.setInt(1, ovChipkaart.getKaartNummer());
 			ps.setString(2, ovChipkaart.getGeldigTot());
@@ -157,7 +143,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	public boolean update (OvChipkaart ovChipkaart) {
 		
 		try {
-			PreparedStatement ps = dbConnection.prepareStatement(
+			ps = dbConnection.prepareStatement(
 					"UPDATE ov_chipkaart SET geldigtot=?, klasse=?, saldo=?, reizigerid=? WHERE kaartnummer=?");
 			ps.setString(1, ovChipkaart.getGeldigTot());
 			ps.setInt(2, ovChipkaart.getKlasse());
@@ -176,7 +162,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	public boolean delete (OvChipkaart ovChipkaart) {
 		
 		try {
-			PreparedStatement ps = dbConnection.prepareStatement(
+			ps = dbConnection.prepareStatement(
 					"DELETE FROM ov_chipkaart WHERE kaartnummer=?");
 			ps.setInt(1, ovChipkaart.getKaartNummer());
 			ps.executeQuery();

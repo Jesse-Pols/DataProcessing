@@ -2,6 +2,8 @@ package casus.p2.v2.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class OracleBaseDao {
@@ -12,6 +14,12 @@ public abstract class OracleBaseDao {
 	private static final String DB_PASSWORD = "admin";
 	
 	Connection dbConnection = getConnection();
+	
+	OvChipkaartOracleDaoImpl odoci = null;
+	ReizigerOracleDaoImpl rodi = null;
+	
+	ResultSet rs = null;
+	PreparedStatement ps = null;
 	
 	protected Connection getConnection(){
 		

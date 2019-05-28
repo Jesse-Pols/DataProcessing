@@ -13,6 +13,10 @@ public abstract class OracleBaseDao {
 	
 	Connection dbConnection = getConnection();
 	
+	OvChipkaartOracleDaoImpl odoci = null;
+	ReizigerOracleDaoImpl rodi = null;
+	ProductOracleDaoImpl podi = null;
+	
 	protected Connection getConnection(){
 		
 		Connection dbConnection = null;

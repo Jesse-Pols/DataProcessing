@@ -1,7 +1,5 @@
 package casus.p2.v2.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import casus.p2.v2.interfaces.ReizigerDao;
@@ -15,11 +13,6 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		
 		Reiziger reiziger = null;
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
-		
-		ResultSet rs = null;
-		PreparedStatement ps = null;
-		
-		OvChipkaartOracleDaoImpl odoci = null;
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -59,11 +52,6 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		
 		ArrayList<Reiziger> reizigers = new ArrayList<Reiziger>();
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
-		
-		ResultSet rs = null;
-		PreparedStatement ps = null;
-		
-		OvChipkaartOracleDaoImpl odoci = null;
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -108,11 +96,6 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		ArrayList<Reiziger> reizigers = new ArrayList<Reiziger>();
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
 		
-		ResultSet rs = null;
-		PreparedStatement ps = null;
-		
-		OvChipkaartOracleDaoImpl odoci = null;
-		
 		try {
 			ps = dbConnection.prepareStatement(
 					"SELECT reizigerid, voorletters, tussenvoegsel, achternaam FROM reiziger WHERE gebortedatum=?");
@@ -148,7 +131,7 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 	public boolean save(Reiziger reiziger) {
 		
 		try {
-			PreparedStatement ps = dbConnection.prepareStatement(
+			ps = dbConnection.prepareStatement(
 					"INSERT INTO reiziger VALUES (?, ?, ?, ?, ?)");
 			ps.setInt(1, reiziger.getReizigerId());
 			ps.setString(2, reiziger.getVoorLetters());
@@ -167,7 +150,7 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 	public boolean update(Reiziger reiziger) {
 		
 		try {
-			PreparedStatement ps = dbConnection.prepareStatement(
+			ps = dbConnection.prepareStatement(
 					"UPDATE reiziger SET voorletters=?, tussenvoegsel=?, achternaam=?, gebortedatum=? WHERE reizigerid=?");
 			ps.setString(1, reiziger.getVoorLetters());
 			ps.setString(2, reiziger.getTussenVoegsel());
@@ -186,7 +169,7 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 	public boolean delete (Reiziger reiziger) {
 		
 		try {
-			PreparedStatement ps = dbConnection.prepareStatement(
+			ps = dbConnection.prepareStatement(
 					"DELETE FROM reiziger WHERE reizigerid=?");
 			ps.setInt(1, reiziger.getReizigerId());
 			ps.executeQuery();
