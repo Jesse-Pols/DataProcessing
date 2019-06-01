@@ -1,7 +1,5 @@
 package casus.p3.v2.interfaces;
 
-import casus.p3.v2.pojo.Reiziger;
-
 public interface ReizigerDao {
 	
 	//public Reiziger getReizigerByReizigerId(int reizigerId, OvChipkaartOracleDaoImpl ocodi);

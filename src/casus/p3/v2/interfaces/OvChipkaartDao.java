@@ -1,9 +1,5 @@
 package casus.p3.v2.interfaces;
 
-import java.util.ArrayList;
-
-import casus.p3.v2.pojo.OvChipkaart;
-
 public interface OvChipkaartDao {
 	
 	/*

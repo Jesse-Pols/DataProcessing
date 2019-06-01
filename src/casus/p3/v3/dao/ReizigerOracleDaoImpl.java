@@ -9,14 +9,13 @@ import casus.p3.v3.pojo.Reiziger;
 public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao {
 	
 	public ArrayList<Reiziger> findAll() {
+		System.out.println("Finding All Reizigers...");
 		
 		ArrayList<Reiziger> reizigers = new ArrayList<Reiziger>();
-		podi = new ProductOracleDaoImpl();
-		odoci = new OvChipkaartOracleDaoImpl();
+		OvChipkaartOracleDaoImpl odoci = new OvChipkaartOracleDaoImpl();
 		
 		try {
-			ps = dbConnection.prepareStatement(
-					"SELECT reizigerid, voorletters, tussenvoegsel, achternaam, gebortedatum FROM reiziger");
+			ps = dbConnection.prepareStatement("SELECT reizigerid, voorletters, tussenvoegsel, achternaam, gebortedatum FROM reiziger");
 			rs = ps.executeQuery();
 			
 		} catch (Exception e)
@@ -34,20 +33,22 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		} catch (Exception e)
 		{ System.out.println("ReizigerOracleDaoImpl/findAll() Failed: " + e.getMessage()); }
 		
+		try { ps.close(); rs.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
+		
 		return reizigers;
 		
 	}
 	
 	public ArrayList<Reiziger> findByGbDatum (String gbDatum) {
+		System.out.println("Finding All Reizigers By GbDatum...");
 		
 		ArrayList<Reiziger> reizigers = new ArrayList<Reiziger>();
-		podi = new ProductOracleDaoImpl();
-		odoci = new OvChipkaartOracleDaoImpl();
+		OvChipkaartOracleDaoImpl odoci = new OvChipkaartOracleDaoImpl();
 		
 		try {
-			ps = dbConnection.prepareStatement(
-					"SELECT reizigerid, voorletters, tussenvoegsel, achternaam, gebortedatum FROM reiziger WHERE gebortedatum=?");
-			ps.setDate(1,  java.sql.Date.valueOf(gbDatum));
+			ps = dbConnection.prepareStatement("SELECT reizigerid, voorletters, tussenvoegsel, achternaam, gebortedatum FROM reiziger WHERE gebortedatum=?");
+			ps.setString(1, gbDatum);
 			rs = ps.executeQuery();
 			
 		} catch (Exception e)
@@ -68,6 +69,9 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		} catch (Exception e)
 		{ System.out.println("ReizigerOracleDaoImpl/findByGbDatum() Failed: " + e.getMessage()); }
 		
+		try { ps.close(); rs.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
+		
 		return reizigers;
 		
 	}
@@ -77,14 +81,13 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 	}
 	
 	public Reiziger find(int reizigerId, boolean recurse) {
+		System.out.println("Finding Reiziger...");
 		
 		Reiziger reiziger = null;
-		podi = new ProductOracleDaoImpl();
-		odoci = new OvChipkaartOracleDaoImpl();
+		OvChipkaartOracleDaoImpl odoci = new OvChipkaartOracleDaoImpl();
 		
 		try {
-			ps = dbConnection.prepareStatement(
-					"SELECT reizigerid, voorletters, tussenvoegsel, achternaam, gebortedatum FROM reiziger WHERE reizigerid=?");
+			ps = dbConnection.prepareStatement("SELECT reizigerid, voorletters, tussenvoegsel, achternaam, gebortedatum FROM reiziger WHERE reizigerId=?");
 			ps.setInt(1, reizigerId);
 			rs = ps.executeQuery();
 			
@@ -104,14 +107,15 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		} catch (Exception e)
 		{ System.out.println("ReizigerOracleDaoImpl/find() Failed: " + e.getMessage()); }
 		
+		try { ps.close(); rs.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
+		
 		return reiziger;
 		
 	}
 	
 	public void save(Reiziger reiziger) {
-		
-		podi = new ProductOracleDaoImpl();
-		odoci = new OvChipkaartOracleDaoImpl();
+		System.out.println("Saving Reiziger...");
 		
 		try {			
 			ps = dbConnection.prepareStatement(
@@ -126,12 +130,13 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		} catch (Exception e)
 		{ System.out.println("ReizigerOracleDaoImpl/save() Failed: " + e.getMessage()); }
 		
+		try { ps.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
+		
 	}
 
 	public void update(Reiziger reiziger) {
-		
-		podi = new ProductOracleDaoImpl();
-		odoci = new OvChipkaartOracleDaoImpl();
+		System.out.println("Updating Reiziger...");
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -145,15 +150,18 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 			
 		} catch (Exception e)
 		{ System.out.println("ReizigerOracleDaoImpl/update() Failed: " + e.getMessage()); }
+		
+		try { ps.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
 	}
 
-	public void delete(int reizigerId) {
+	public void delete(Reiziger reiziger) {
+		System.out.println("Deleting Reiziger...");
 		
-		podi = new ProductOracleDaoImpl();
-		odoci = new OvChipkaartOracleDaoImpl();
+		OvChipkaartOracleDaoImpl odoci = new OvChipkaartOracleDaoImpl();
 		
 		try {
-			ArrayList<OvChipkaart> ovChipkaarten = odoci.findAllByReizigerId(reizigerId);
+			ArrayList<OvChipkaart> ovChipkaarten = odoci.findAllByReizigerId(reiziger.getReizigerId());
 			
 			for (OvChipkaart ovChipkaart : ovChipkaarten)
 				odoci.delete(ovChipkaart.getKaartNummer());			
@@ -163,11 +171,14 @@ public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao 
 		try {
 			ps = dbConnection.prepareStatement(
 					"DELETE FROM reiziger WHERE reizigerid=?");
-			ps.setInt(1, reizigerId);
+			ps.setInt(1, reiziger.getReizigerId());
 			ps.executeQuery();
 			
 		} catch (Exception e)
 		{ System.out.println("ReizigerOracleDaoImpl/delete() Failed: " + e.getMessage()); }
+		
+		try { ps.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
 		
 	}
 

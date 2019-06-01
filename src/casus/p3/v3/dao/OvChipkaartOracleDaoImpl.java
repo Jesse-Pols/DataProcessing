@@ -10,10 +10,11 @@ import casus.p3.v3.pojo.Reiziger;
 public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaartDao {
 	
 	public ArrayList<OvChipkaart> findAll() {
+		System.out.println("Finding All OvChipkaarten...");
 		
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
-		rodi = new ReizigerOracleDaoImpl();
-		podi = new ProductOracleDaoImpl();
+		ReizigerOracleDaoImpl rodi = new ReizigerOracleDaoImpl();
+		ProductOracleDaoImpl podi = new ProductOracleDaoImpl();
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -22,7 +23,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 					+ "RIGHT OUTER JOIN ov_chipkaart ovkaart "
 					+ "ON ovproduct.kaartnummer = ovkaart.kaartnummer "
 					+ "LEFT OUTER JOIN product p "
-					+ "on p.productnummer = ovproduct.productnummer");
+					+ "ON p.productnummer = ovproduct.productnummer");
 			rs = ps.executeQuery();
 		} catch (Exception e)
 		{ System.out.println("OvChipkaartOracleDaoImpl/findAll()/Query Failed: \n" + e.getMessage()); }
@@ -58,6 +59,9 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		} catch (Exception e)
 		{ System.out.println("OvChipkaartOracleDaoImpl/findAll()/while(rs.next()) Failed: \n" + e.getMessage()); }
 		
+		try { ps.close(); rs.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
+		
 		return ovChipkaarten;
 		
 	}
@@ -67,10 +71,11 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	}
 	
 	public ArrayList<OvChipkaart> findAllByReizigerId(int reizigerId, boolean recurse){
+		System.out.println("Finding All OvChipkaarten By ReizigerId...");
 		
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();
-		rodi = new ReizigerOracleDaoImpl();
-		podi = new ProductOracleDaoImpl();
+		ReizigerOracleDaoImpl rodi = new ReizigerOracleDaoImpl();
+		ProductOracleDaoImpl podi = new ProductOracleDaoImpl();
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -115,6 +120,9 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		} catch (Exception e)
 		{ System.out.println("OvChipkaartOracleDaoImpl/findAllByReizigerId()/rs.next() Failed: " + e.getMessage()); }
 		
+		try { ps.close(); rs.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
+		
 		return ovChipkaarten;
 	}
 	
@@ -123,10 +131,11 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	}
 	
 	public OvChipkaart find(int kaartNummer, boolean recurse) {
+		System.out.println("Finding OvChipkaart...");
 		
 		OvChipkaart ovChipkaart = null;
-		rodi = new ReizigerOracleDaoImpl();
-		podi = new ProductOracleDaoImpl();
+		ReizigerOracleDaoImpl rodi = new ReizigerOracleDaoImpl();
+		ProductOracleDaoImpl podi = new ProductOracleDaoImpl();
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -137,6 +146,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 					+ "LEFT OUTER JOIN product p "
 					+ "ON p.productnummer = ovproduct.productnummer "
 					+ "WHERE ovkaart.kaartnummer=?");
+			ps.setInt(1, kaartNummer);
 			rs = ps.executeQuery();
 		} catch (Exception e)
 		{ System.out.println("OvChipkaartOracleDaoImpl/find()/Query Failed: " + e.getMessage()); }
@@ -155,14 +165,17 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		} catch (Exception e)
 		{ System.out.println("OvChipkaartOracleDaoImpl/find()/rs.next() Failed: " + e.getMessage()); }
 		
+		try { ps.close(); rs.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
+		
 		return ovChipkaart;
 		
 	}
 	
 	public void save(OvChipkaart ovChipkaart) {
+		System.out.println("Saving OvChipkaart...");
 		
-		rodi = new ReizigerOracleDaoImpl();
-		podi = new ProductOracleDaoImpl();
+		ProductOracleDaoImpl podi = new ProductOracleDaoImpl();
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -174,7 +187,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 			ps.setInt(5, ovChipkaart.getReiziger().getReizigerId());
 			ps.executeQuery();			
 		} catch (Exception e)
-		{ e.printStackTrace(); }
+		{ System.out.println("OvChipkaartOracleDaoImpl/save()/Query/insertOvChipkaart Failed: " + e.getMessage()); }
 		
 		try {
 			for (Product product : ovChipkaart.getProducten()) {
@@ -188,14 +201,17 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 				ps.executeQuery();
 			}			
 		} catch (Exception e)
-		{ e.printStackTrace(); }
+		{ System.out.println("OvChipkaartOracleDaoImpl/save()/Query/insertProduct Failed: " + e.getMessage()); }
+		
+		try { ps.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
 		
 	}
 	
 	public OvChipkaart update(OvChipkaart ovChipkaart) {
+		System.out.println("Updating OvChipkaart...");
 		
-		rodi = new ReizigerOracleDaoImpl();
-		podi = new ProductOracleDaoImpl();
+		ProductOracleDaoImpl podi = new ProductOracleDaoImpl();
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -207,9 +223,8 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 			ps.setInt(5, ovChipkaart.getKaartNummer());
 			ps.executeQuery();			
 			
-			
 		} catch (Exception e)
-		{ e.printStackTrace(); }
+		{ System.out.println("OvChipkaartOracleDaoImpl/update()/Query/updateOvChipkaart Failed: " + e.getMessage()); }
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -257,7 +272,10 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 				}
 			}				
 		} catch (Exception e)
-		{ e.printStackTrace(); }
+		{ System.out.println("OvChipkaartOracleDaoImpl/update()/Query/insertordeleteProduct Failed: " + e.getMessage()); }
+		
+		try { ps.close(); rs.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
 		
 		return find(ovChipkaart.getKaartNummer());
 	}
@@ -268,9 +286,7 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	}
 	
 	public void delete(OvChipkaart ovChipkaart) {
-		
-		rodi = new ReizigerOracleDaoImpl();
-		podi = new ProductOracleDaoImpl();
+		System.out.println("Deleting OvChipkaart...");
 		
 		try {
 			for (Product product : ovChipkaart.getProducten()) {
@@ -288,7 +304,10 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 			ps.executeQuery();
 								
 		} catch (Exception e)
-		{ e.printStackTrace(); }
+		{ System.out.println("OvChipkaartOracleDaoImpl/delete()/Query Failed: " + e.getMessage()); }
+		
+		try { ps.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
 		
 	}
 		

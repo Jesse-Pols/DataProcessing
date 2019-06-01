@@ -1,12 +1,6 @@
 package casus.p3.v2.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-
 import casus.p3.v2.interfaces.ReizigerDao;
-import casus.p3.v2.pojo.OvChipkaart;
-import casus.p3.v2.pojo.Reiziger;
 
 public class ReizigerOracleDaoImpl extends OracleBaseDao implements ReizigerDao{
 	

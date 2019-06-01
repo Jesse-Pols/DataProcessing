@@ -6,11 +6,10 @@ import java.util.ArrayList;
 
 import casus.p3.v2.interfaces.OvChipkaartDao;
 import casus.p3.v2.pojo.OvChipkaart;
-import casus.p3.v2.pojo.Product;
-import casus.p3.v2.pojo.Reiziger;
 
 public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaartDao {	
 	
+	@SuppressWarnings("unused")
 	public ArrayList<OvChipkaart> findAll() {
 		
 		ArrayList<OvChipkaart> ovChipkaarten = new ArrayList<OvChipkaart>();

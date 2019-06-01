@@ -9,10 +9,10 @@ import casus.p3.v3.pojo.Product;
 public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 	
 	public ArrayList<Product> findAll() {
+		System.out.println("Finding All Producten...");
 		
 		ArrayList<Product> producten = new ArrayList<Product>();
-		rodi = new ReizigerOracleDaoImpl();
-		odoci = new OvChipkaartOracleDaoImpl();
+		OvChipkaartOracleDaoImpl odoci = new OvChipkaartOracleDaoImpl();
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -57,15 +57,18 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 		} catch (Exception e)
 		{ System.out.println("ProductOracleDaoImpl/findAll()/rs.next() Failed: " + e.getMessage()); }
 		
+		try { ps.close(); rs.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
+		
 		return producten;
 		
 	}
 	
 	public ArrayList<Product> findByKaartNummer(int kaartNummer){
+		System.out.println("Finding All Producten By Kaartnummer...");
 		
 		ArrayList<Product> producten = new ArrayList<Product>();	
-		rodi = new ReizigerOracleDaoImpl();
-		odoci = new OvChipkaartOracleDaoImpl();
+		OvChipkaartOracleDaoImpl odoci = new OvChipkaartOracleDaoImpl();
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -74,7 +77,7 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 					+ "JOIN product p "
 					+ "ON ovproduct.productnummer = p.productnummer "
 					+ "JOIN ov_chipkaart ovkaart "
-					+ "ON ocproduct.kaartnummer = ovkaart.kaartnummer "
+					+ "ON ovproduct.kaartnummer = ovkaart.kaartnummer "
 					+ "WHERE ovkaart.kaartnummer=?");
 			ps.setInt(1, kaartNummer);
 			rs = ps.executeQuery();
@@ -107,6 +110,9 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 		} catch (Exception e)
 		{ System.out.println("ProductOracleDaoImpl/findByKaartNummer()/rs.next() Failed: " + e.getMessage()); }
 		
+		try { ps.close(); rs.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
+		
 		return producten;
 	}
 	
@@ -115,10 +121,10 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 	}
 	
 	public Product findByProductNummer(int productNummer, boolean recurse) {
+		System.out.println("Finding Product by ProductNummer...");
 		
 		Product product = null;
-		rodi = new ReizigerOracleDaoImpl();
-		odoci = new OvChipkaartOracleDaoImpl();
+		OvChipkaartOracleDaoImpl odoci = new OvChipkaartOracleDaoImpl();
 		
 		try {
 			ps = dbConnection.prepareStatement(
@@ -152,17 +158,18 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 		} catch (Exception e)
 		{ System.out.println("ProductOracleDaoImpl/findByProductNummer()/rs.next() Failed: " + e.getMessage()); }
 		
+		try { ps.close(); rs.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
+		
 		return product;
 	}
 	
 	public void save(Product product) {
-		
-		rodi = new ReizigerOracleDaoImpl();
-		odoci = new OvChipkaartOracleDaoImpl();
+		System.out.println("Saving Product...");
 		
 		try {
 			ps = dbConnection.prepareStatement(
-					"INSERT INTO product VALUES (?, ?, ?, ?, ?)");
+					"INSERT INTO product VALUES (?, ?, ?, ?)");
 			ps.setInt(1, product.getProductNummer());
 			ps.setString(2, product.getProductNaam());
 			ps.setString(3, product.getBeschrijving());
@@ -188,12 +195,14 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 			
 		} catch (Exception e)
 		{ System.out.println("ProductOracleDaoImpl/save()/Query Failed: " + e.getMessage()); }	
+		
+		try { ps.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
+		
 	}
 	
 	public void update(Product product) {
-		
-		rodi = new ReizigerOracleDaoImpl();
-		odoci = new OvChipkaartOracleDaoImpl();
+		System.out.println("Updating Product...");
 		
 		try {
 			
@@ -256,12 +265,13 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 		} catch (Exception e)
 		{ System.out.println("ProductOracleDaoImpl/update()/rs.next() Failed: " + e.getMessage()); }
 		
+		try { ps.close(); rs.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
+		
 	}
 	
 	public void delete(Product product) {
-		
-		rodi = new ReizigerOracleDaoImpl();
-		odoci = new OvChipkaartOracleDaoImpl();
+		System.out.println("Deleting Product...");
 		
 		try {
 			
@@ -282,9 +292,13 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 		} catch (Exception e)
 		{ System.out.println("ProductOracleDaoImpl/delete()/Query Failed: " + e.getMessage()); }
 		
+		try { ps.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
+		
 	}
 	
 	public int GetNewOvProductId() {
+		System.out.println("Getting new Ov Product Id...");
 		
 		int newId = 0;
 		try {
@@ -301,6 +315,9 @@ public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 			}
 		} catch (Exception e)
 		{ System.out.println("ProductOracleDaoImpl/GetNewOvProductId()/rs.next() Failed: " + e.getMessage()); }
+		
+		try { ps.close(); rs.close(); } catch (Exception e)
+		{ System.out.println("Had Trouble Closing ps & rs: " + e.getMessage()); }
 		
 		newId++;
 		

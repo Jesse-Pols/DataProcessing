@@ -1,11 +1,6 @@
 package casus.p3.v2.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 import casus.p3.v2.interfaces.ProductDao;
-import casus.p3.v2.pojo.OvChipkaart;
-import casus.p3.v2.pojo.Product;
 
 public class ProductOracleDaoImpl extends OracleBaseDao implements ProductDao {
 	

@@ -15,10 +15,6 @@ public abstract class OracleBaseDao {
 	
 	Connection dbConnection = getConnection();
 	
-	OvChipkaartOracleDaoImpl odoci = null;
-	ReizigerOracleDaoImpl rodi = null;
-	ProductOracleDaoImpl podi = null;
-	
 	ResultSet rs = null;
 	PreparedStatement ps = null;
 	
