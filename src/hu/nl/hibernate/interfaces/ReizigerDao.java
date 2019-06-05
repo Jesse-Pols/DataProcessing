@@ -1,12 +1,13 @@
 package hu.nl.hibernate.interfaces;
 
+import java.util.List;
+
 import hu.nl.hibernate.pojo.Reiziger;
 
 public interface ReizigerDao {
 	
-	//public Reiziger find(int reizigerId);
-	//public ArrayList<Reiziger> findAll();
-	//public ArrayList<Reiziger> findByGbDatum(String gbdatum);
+	public List<Reiziger> findAll();
+	public Reiziger findById(int reizigerId);
 	
 	public boolean save(Reiziger reiziger);
 	public boolean update(Reiziger reiziger);

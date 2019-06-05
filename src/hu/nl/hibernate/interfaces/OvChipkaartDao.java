@@ -1,12 +1,14 @@
 package hu.nl.hibernate.interfaces;
 
+import java.util.List;
+
 import hu.nl.hibernate.pojo.OvChipkaart;
 
 public interface OvChipkaartDao {
 
-	//public OvChipkaart find(int kaartNummer);
-	//public ArrayList<OvChipkaart> findAll();
-	//public ArrayList<OvChipkaart> findByReiziger(Reiziger reiziger);
+	public List<OvChipkaart> findAll();
+	public List<OvChipkaart> findByReizigerId(int reizigerId);
+	public OvChipkaart findById(int kaartNummer);
 	
 	public boolean save(OvChipkaart ovChipkaart);
 	public boolean update(OvChipkaart ovChipkaart);
