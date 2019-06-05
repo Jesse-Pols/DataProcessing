@@ -1,95 +1,53 @@
 package hu.nl.hibernate;
 
+import java.util.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
-import javax.persistence.TypedQuery;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+import hu.nl.hibernate.dao.OvChipkaartOracleDaoImpl;
+import hu.nl.hibernate.dao.ReizigerOracleDaoImpl;
+import hu.nl.hibernate.pojo.OvChipkaart;
+import hu.nl.hibernate.pojo.Reiziger;
 
 public class Main {
-  private static SessionFactory factory;
   public static void main(String[] args) throws SQLException, ParseException {
-	  
-      try {
-        factory = new Configuration().configure().buildSessionFactory();
-      } catch (Throwable ex) {
-        System.err.println("Failed to create sessionFactory object." + ex);
-        throw new ExceptionInInitializerError(ex);
-      }
-      Session session = factory.openSession();
       
-      // Transaction for saving a Log
-      Transaction t = session.beginTransaction();      
-      Log log = new Log(1,"Hibernate works!");
-      session.save(log);
-      t.commit();  
-      System.out.println("successfully saved");
+      OvChipkaartOracleDaoImpl odoci = new OvChipkaartOracleDaoImpl();
+      ReizigerOracleDaoImpl rodi = new ReizigerOracleDaoImpl();  
       
-      // CRUD without Annotations
-      t = session.beginTransaction();
-      Reiziger reiziger = new Reiziger(54321, "L", "vVeen");
+      List<OvChipkaart> allOvChipkaarten = odoci.findAll();
+      List<OvChipkaart> allOvChipkaartenByReizigerId = odoci.findByReizigerId(2);
+      List<Reiziger> allReizigers = rodi.findAll();
       
-      // Create
-      session.save(reiziger);
+      Reiziger r_1 = rodi.findById(2);      
+      OvChipkaart ov_1 = odoci.findById(79625);
       
-      // Read
-      String sql = "select new "
-      		+ "hu.nl.hibernate.Reiziger("
-      		+ "r.reizigerid,"
-      		+ "r.voorletters,"
-      		+ "r.achternaam"
-      		+ ") from Reiziger r";
-      List<Reiziger> reizigers = session.createQuery(sql, Reiziger.class).getResultList();
-      for (Reiziger tempReiziger : reizigers)
-    	  System.out.println("Reiziger in List: " + tempReiziger);
+      System.out.println("\nAlle ovchipkaarten: \n" + allOvChipkaarten);
+      System.out.println("\nAlle Reizigers: \n" + allReizigers);
+      System.out.println("\nReiziger met reizigerid 2: \n" + r_1);
+      System.out.println("\nOvkaart met kaartnummer 79625: \n" + ov_1);
+      System.out.println("\nAlle Ovkaarten met reizigerid 2: \n" + allOvChipkaartenByReizigerId);
       
-      // Update
-      reiziger.setAchterNaam("VanVeen");
-      session.update(reiziger);
+      Reiziger reiziger = new Reiziger(6, "L", "van", "Veen", new Date());
+      OvChipkaart ovChipkaart = new OvChipkaart(12345, new Date(), 2, 100.05, reiziger);
+      ovChipkaart.setReiziger(reiziger);
       
-      // Delete
-      session.delete(reiziger);
+      rodi.save(reiziger);
+      odoci.save(ovChipkaart);
       
-      // Commit
-      t.commit();
-      System.out.println("Success");     
+      reiziger.setTussenvoegsel("v");
+      rodi.update(reiziger);
       
-      // CRUD with Annotations
-      t = session.beginTransaction();
-      OvChipkaart ovChipkaart = new OvChipkaart(4, 2);
+      ovChipkaart.setKlasse(1);
+      odoci.update(ovChipkaart);
       
-      // Create
-      session.save(ovChipkaart);
+      odoci.delete(ovChipkaart);
+      rodi.delete(reiziger);     
       
-      // Read
-      String sql2 = "select new "
-        		+ "hu.nl.hibernate.OvChipkaart("
-        		+ "o.kaartnummer,"
-        		+ "o.klasse"
-        		+ ") from OvChipkaart o";
-        List<OvChipkaart> ovChipkaarten = session.createQuery(sql2, OvChipkaart.class).getResultList();
-        for (OvChipkaart tempOvChipkaart : ovChipkaarten) {
-        	System.out.println("OvChipkaart in List: " + tempOvChipkaart);
-        }    	  
-      
-        // Update
-        ovChipkaart.setKlasse(1);
-        session.update(ovChipkaart);
-        
-        // Delete
-        session.delete(ovChipkaart);
-      
-      // Commit
-      t.commit();
-      System.out.println("Success");
-      
-      factory.close();  
-      session.close();   
+      rodi.closeConnection();
+      System.out.println("Success!");   
+      System.exit(0);
       
   }  
 }

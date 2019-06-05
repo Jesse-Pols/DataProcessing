@@ -7,11 +7,11 @@
     <session-factory>
         <property name="dialect">org.hibernate.dialect.Oracle10gDialect</property>
         <property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>  
-        <property name="connection.username">C##USER</property>
+        <property name="connection.username">C##OV_USER</property>
         <property name="connection.password">admin</property>
         <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>  
     <mapping resource="Log.hbm.xml"/>
-    <mapping resource="Reiziger.hbm.xml"/>
-    <mapping class="hu.nl.hibernate.OvChipkaart"/>
+    <mapping class="hu.nl.hibernate.pojo.Reiziger"/>
+    <mapping class="hu.nl.hibernate.pojo.OvChipkaart"/>
     </session-factory>
 </hibernate-configuration>  

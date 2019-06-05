@@ -1,4 +1,4 @@
-package hu.nl.hibernate;
+package hu.nl.hibernate.pojo;
 
 public class Log {
     private int id;
