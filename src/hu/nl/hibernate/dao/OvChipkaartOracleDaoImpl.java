@@ -1,6 +1,5 @@
 package hu.nl.hibernate.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -14,9 +13,9 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 	
 	private static final String sqlObject = "select new hu.nl.hibernate.pojo.OvChipkaart(ov.kaartnummer, ov.geldigtot, ov.klasse, ov.saldo, ov.reiziger) from OvChipkaart ov ";
 
+	@SuppressWarnings("unchecked")
 	public List<OvChipkaart> findAll(){
 		List<OvChipkaart> ovChipkaarten = null;
-		ReizigerOracleDaoImpl rodi = new ReizigerOracleDaoImpl();
 		
 		try {
 			ovChipkaarten = session.createQuery(sqlObject).getResultList();
@@ -27,15 +26,19 @@ public class OvChipkaartOracleDaoImpl extends OracleBaseDao implements OvChipkaa
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<OvChipkaart> findByReizigerId(int reizigerId) {
 		
-		List<OvChipkaart> ovChipkaarten = this.findAll();
-		List<OvChipkaart> ovChipkaartenById = new ArrayList<OvChipkaart>();
+		List<OvChipkaart> ovChipkaarten = null;
 		
-		for (OvChipkaart ovChipkaart : ovChipkaarten)
-			if (ovChipkaart.getReiziger().getReizigerId() == reizigerId) ovChipkaartenById.add(ovChipkaart);
+		try {
+			Query query = session.createQuery(sqlObject + " where ov.reiziger.reizigerid = ?1");
+			query.setParameter(1, reizigerId);
+			ovChipkaarten = query.getResultList();
+		} catch (Exception ex)
+		{ System.out.println("ReizigerOracleDaoImpl/find() Query Failed: " + ex); }
 		
-		return ovChipkaartenById;
+		return ovChipkaarten;
 		
 	}
 	
